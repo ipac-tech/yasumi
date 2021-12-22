@@ -671,9 +671,10 @@ class Japan extends AbstractProvider
             $date->add(new DateInterval("P1D"));
             $this->addHoliday(new Holiday(
                             "techoceanholiday$creator",
-                            ['en' => "techocean Holiday $creator", 'ja' => "テックオーシャン年始$creator"],
+                            ['en' => "techocean Holiday $creator", 'ja' => "年始$creator"],
                             $date,
-                            $this->locale
+                            $this->locale,
+                            'techocean'
             ));
         }
         $date->setDate($this->year, 12, 28);
@@ -681,9 +682,10 @@ class Japan extends AbstractProvider
             $date->add(new DateInterval("P1D"));
             $this->addHoliday(new Holiday(
                             "techoceanholiday$creator",
-                            ['en' => "techocean Holiday $creator", 'ja' => "テックオーシャン年末$creator"],
+                            ['en' => "techocean Holiday $creator", 'ja' => "年末$creator"],
                             $date,
-                            $this->locale
+                            $this->locale,
+                            'techocean'
             ));
         }
     }
