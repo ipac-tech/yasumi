@@ -106,6 +106,7 @@ class Japan extends AbstractProvider
         $this->calculateCoronationDay();
         $this->calculateEnthronementProclamationCeremony();
         $this->calculateBridgeHolidays();
+        $this->calculateTechoceanHolidays();
     }
 
     /**
