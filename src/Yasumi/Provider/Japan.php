@@ -106,6 +106,7 @@ class Japan extends AbstractProvider
         $this->calculateCoronationDay();
         $this->calculateEnthronementProclamationCeremony();
         $this->calculateBridgeHolidays();
+        $this->calculateTechoceanHolidays();
     }
 
     /**
@@ -655,6 +656,37 @@ class Japan extends AbstractProvider
                 ], $bridgeDate, $this->locale));
                 $counter++;
             }
+        }
+    }
+
+    /**
+     * Calculate Techocean holidays
+     *
+     * @throws \Exception
+     */
+    private function calculateTechoceanHolidays(): void
+    {
+        $date = new DateTime("$this->year-01-01", DateTimeZoneFactory::getDateTimeZone($this->timezone));
+        foreach (range(1, 3) as $creator) {
+            $date->add(new DateInterval("P1D"));
+            $this->addHoliday(new Holiday(
+                            "techoceanholiday$creator",
+                            ['en' => "techocean Holiday $creator", 'ja' => "年始$creator"],
+                            $date,
+                            $this->locale,
+                            'techocean'
+            ));
+        }
+        $date->setDate($this->year, 12, 28);
+        foreach (range(4, 6) as $creator) {
+            $date->add(new DateInterval("P1D"));
+            $this->addHoliday(new Holiday(
+                            "techoceanholiday$creator",
+                            ['en' => "techocean Holiday $creator", 'ja' => "年末$creator"],
+                            $date,
+                            $this->locale,
+                            'techocean'
+            ));
         }
     }
 }
