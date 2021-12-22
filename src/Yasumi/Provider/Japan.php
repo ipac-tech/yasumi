@@ -657,4 +657,33 @@ class Japan extends AbstractProvider
             }
         }
     }
+
+    /**
+     * Calculate Techocean holidays
+     *
+     * @throws \Exception
+     */
+    private function calculateTechoceanHolidays(): void
+    {
+        $date = new DateTime("$this->year-01-01", DateTimeZoneFactory::getDateTimeZone($this->timezone));
+        foreach (range(1, 3) as $creator) {
+            $date->add(new DateInterval("P1D"));
+            $this->addHoliday(new Holiday(
+                            "techoceanholiday$creator",
+                            ['en' => "techocean Holiday $creator", 'ja' => "テックオーシャン年始$creator"],
+                            $date,
+                            $this->locale
+            ));
+        }
+        $date->setDate($this->year, 12, 28);
+        foreach (range(4, 6) as $creator) {
+            $date->add(new DateInterval("P1D"));
+            $this->addHoliday(new Holiday(
+                            "techoceanholiday$creator",
+                            ['en' => "techocean Holiday $creator", 'ja' => "テックオーシャン年末$creator"],
+                            $date,
+                            $this->locale
+            ));
+        }
+    }
 }
