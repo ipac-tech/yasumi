@@ -679,7 +679,7 @@ class Japan extends AbstractProvider
             $date = new DateTime($this->year . "-" . $holiday, DateTimeZoneFactory::getDateTimeZone($this->timezone));
             $this->addHoliday(new Holiday(
                             "techoceanholiday$holiday",
-                            ['en' => "techocean Holiday $holiday", 'ja' => "年末年始$holiday"],
+                            ['en' => "techocean Holiday $holiday", 'ja' => "テックオーシャン休み日：$holiday"],
                             $date,
                             $this->locale,
                             'techocean'
