@@ -679,10 +679,10 @@ class Japan extends AbstractProvider
         }
         $date->setDate($this->year, 12, 25);
         foreach (range(4, 6) as $creator) {
-            $date->add(new DateInterval("P1D"));
+            $date->add(new DateInterval("P${creator}D"));
             $this->addHoliday(new Holiday(
-                            "techoceanholiday$creator",
-                            ['en' => "techocean Holiday $creator", 'ja' => "年末$creator"],
+                            "techoceanholiday${creator}",
+                            ['en' => "techocean Holiday $creator", 'ja' => "年末${creator}"],
                             $date,
                             $this->locale,
                             'techocean'
