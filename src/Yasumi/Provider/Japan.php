@@ -666,27 +666,26 @@ class Japan extends AbstractProvider
      */
     private function calculateTechoceanHolidays(): void
     {
-        $date = new DateTime("$this->year-01-01", DateTimeZoneFactory::getDateTimeZone($this->timezone));
-        foreach (range(1, 3) as $creator) {
-            $date->add(new DateInterval("P1D"));
+        $holidays = [
+            '01-02', 
+            '01-03',
+            '01-04',
+            '12-28',
+            '12-29',
+            '12-30',
+            '12-31',
+        ];
+        foreach ($holidays as $holiday) {
+            $date = new DateTime($this->year . "-" . $holiday, DateTimeZoneFactory::getDateTimeZone($this->timezone));
             $this->addHoliday(new Holiday(
-                            "techoceanholiday$creator",
-                            ['en' => "techocean Holiday $creator", 'ja' => "年始$creator"],
-                            $date,
-                            $this->locale,
-                            'techocean'
-            ));
-        }
-        $date->setDate($this->year, 12, 24);
-        foreach (range(4, 7) as $creator) {
-            $date->add(new DateInterval("P${creator}D"));
-            $this->addHoliday(new Holiday(
-                            "techoceanholiday${creator}",
-                            ['en' => "techocean Holiday $creator", 'ja' => "年末${creator}"],
+                            "techoceanholiday$holiday",
+                            ['en' => "techocean Holiday $holiday", 'ja' => "年末年始$holiday"],
                             $date,
                             $this->locale,
                             'techocean'
             ));
         }
     }
+
 }
+
