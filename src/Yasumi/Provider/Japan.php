@@ -677,8 +677,8 @@ class Japan extends AbstractProvider
                             'techocean'
             ));
         }
-        $date->setDate($this->year, 12, 25);
-        foreach (range(4, 6) as $creator) {
+        $date->setDate($this->year, 12, 24);
+        foreach (range(4, 7) as $creator) {
             $date->add(new DateInterval("P${creator}D"));
             $this->addHoliday(new Holiday(
                             "techoceanholiday${creator}",
