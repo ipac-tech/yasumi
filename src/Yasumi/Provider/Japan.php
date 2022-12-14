@@ -669,7 +669,6 @@ class Japan extends AbstractProvider
         $holidays = [
             '01-02', 
             '01-03',
-            '01-04',
             '05-02',
             '12-29',
             '12-30',
