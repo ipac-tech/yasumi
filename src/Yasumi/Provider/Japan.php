@@ -667,8 +667,10 @@ class Japan extends AbstractProvider
     private function calculateTechoceanHolidays(): void
     {
         $holidays = [
-            '01-02', 
+            '01-01',
+            '01-02',
             '01-03',
+            '01-04',
             '05-01',
             '05-02',
             '05-03',
