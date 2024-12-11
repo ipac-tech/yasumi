@@ -108,6 +108,7 @@ class Japan extends AbstractProvider
         $this->calculateCoronationDay();
         $this->calculateEnthronementProclamationCeremony();
         $this->calculateBridgeHolidays();
+        $this->calculateTechoceanHolidays();
     }
 
     public function getSources(): array
@@ -380,6 +381,8 @@ class Japan extends AbstractProvider
         if (2021 === $this->year) {
             // For Olympic 2021 Tokyo (rescheduled due to the COVID-19 pandemic)
             $date = new DateTime("$this->year-7-22", DateTimeZoneFactory::getDateTimeZone($this->timezone));
+        } elseif (2020 === $this->year) {
+            $date = new DateTime("$this->year-7-23", DateTimeZoneFactory::getDateTimeZone($this->timezone));
         } elseif ($this->year >= 2003) {
             $date = new DateTime("third monday of july $this->year", DateTimeZoneFactory::getDateTimeZone($this->timezone));
         } elseif ($this->year >= 1996) {
@@ -666,4 +669,33 @@ class Japan extends AbstractProvider
             }
         }
     }
+
+    /**
+     * Calculate Techocean holidays
+     *
+     * @throws \Exception
+     */
+    private function calculateTechoceanHolidays(): void
+    {
+        $holidays = [
+            '01-02', 
+            '01-03',
+            '05-02',
+            '12-29',
+            '12-30',
+            '12-31',
+        ];
+        foreach ($holidays as $holiday) {
+            $date = new DateTime($this->year . "-" . $holiday, DateTimeZoneFactory::getDateTimeZone($this->timezone));
+            $this->addHoliday(new Holiday(
+                            "techoceanholiday$holiday",
+                            ['en' => "techocean Holiday $holiday", 'ja' => "テックオーシャン休み日：$holiday"],
+                            $date,
+                            $this->locale,
+                            'techocean'
+            ));
+        }
+    }
+
 }
+
