@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +25,8 @@ use Yasumi\Holiday;
  */
 class Austria extends AbstractProvider
 {
-    use CommonHolidays, ChristianHolidays;
+    use CommonHolidays;
+    use ChristianHolidays;
 
     /**
      * Code to identify this Holiday Provider. Typically this is the ISO3166 code corresponding to the respective
@@ -65,33 +68,12 @@ class Austria extends AbstractProvider
         $this->calculateNationalDay();
     }
 
-    /**
-     * National Day.
-     *
-     * The Declaration of Neutrality was a declaration by the Austrian Parliament declaring the country permanently
-     * neutral. It was enacted on 26 October 1955 as a constitutional act of parliament. Since 1955, neutrality has
-     * become a deeply ingrained element of Austrian identity. Austria's national holiday on 26 October commemorates
-     * the declaration.
-     *
-     * @link https://en.wikipedia.org/wiki/Declaration_of_Neutrality
-     *
-     * @throws InvalidDateException
-     * @throws \InvalidArgumentException
-     * @throws UnknownLocaleException
-     * @throws \Exception
-     */
-    private function calculateNationalDay(): void
+    public function getSources(): array
     {
-        if ($this->year < 1955) {
-            return;
-        }
-
-        $this->addHoliday(new Holiday(
-            'nationalDay',
-            ['de' => 'Nationalfeiertag'],
-            new DateTime($this->year . '-10-26', new \DateTimeZone($this->timezone)),
-            $this->locale
-        ));
+        return [
+            'https://en.wikipedia.org/wiki/Public_holidays_in_Austria',
+            'https://de.wikipedia.org/wiki/Feiertage_in_%C3%96sterreich',
+        ];
     }
 
     /**
@@ -103,7 +85,7 @@ class Austria extends AbstractProvider
      * of Austria, Lower Austria, Upper Austria, and Vienna. His feast day is 15
      * November.
      *
-     * @link https://en.wikipedia.org/wiki/Leopold_III,_Margrave_of_Austria
+     * @see https://en.wikipedia.org/wiki/Leopold_III,_Margrave_of_Austria
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -119,7 +101,36 @@ class Austria extends AbstractProvider
         $this->addHoliday(new Holiday(
             'stLeopoldsDay',
             [],
-            new DateTime($this->year . '-11-15', new \DateTimeZone($this->timezone)),
+            new DateTime($this->year.'-11-15', new \DateTimeZone($this->timezone)),
+            $this->locale
+        ));
+    }
+
+    /**
+     * National Day.
+     *
+     * The Declaration of Neutrality was a declaration by the Austrian Parliament declaring the country permanently
+     * neutral. It was enacted on 26 October 1955 as a constitutional act of parliament. Since 1955, neutrality has
+     * become a deeply ingrained element of Austrian identity. Austria's national holiday on 26 October commemorates
+     * the declaration.
+     *
+     * @see https://en.wikipedia.org/wiki/Declaration_of_Neutrality
+     *
+     * @throws InvalidDateException
+     * @throws \InvalidArgumentException
+     * @throws UnknownLocaleException
+     * @throws \Exception
+     */
+    private function calculateNationalDay(): void
+    {
+        if ($this->year < 1955) {
+            return;
+        }
+
+        $this->addHoliday(new Holiday(
+            'nationalDay',
+            ['de' => 'Nationalfeiertag'],
+            new DateTime($this->year.'-10-26', new \DateTimeZone($this->timezone)),
             $this->locale
         ));
     }

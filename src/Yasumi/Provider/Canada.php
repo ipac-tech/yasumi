@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +25,8 @@ use Yasumi\Holiday;
  */
 class Canada extends AbstractProvider
 {
-    use CommonHolidays, ChristianHolidays;
+    use CommonHolidays;
+    use ChristianHolidays;
 
     /**
      * Code to identify this Holiday Provider. Typically this is the ISO3166 code corresponding to the respective
@@ -59,10 +62,17 @@ class Canada extends AbstractProvider
         $this->calculateRemembranceDay();
     }
 
+    public function getSources(): array
+    {
+        return [
+            'https://en.wikipedia.org/wiki/Public_holidays_in_Canada',
+        ];
+    }
+
     /**
      * Family Day.
      *
-     * @link https://en.wikipedia.org/wiki/Family_Day_(Canada)
+     * @see https://en.wikipedia.org/wiki/Family_Day_(Canada)
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -86,7 +96,7 @@ class Canada extends AbstractProvider
     /**
      * Victoria Day.
      *
-     * @link https://en.wikipedia.org/wiki/Victoria_Day
+     * @see https://en.wikipedia.org/wiki/Victoria_Day
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -110,7 +120,7 @@ class Canada extends AbstractProvider
     /**
      * National Indigenous Peoples Day.
      *
-     * @link https://www.rcaanc-cirnac.gc.ca/eng/1100100013248/1534872397533
+     * @see https://www.rcaanc-cirnac.gc.ca/eng/1100100013248/1534872397533
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -132,33 +142,9 @@ class Canada extends AbstractProvider
     }
 
     /**
-     * Canada Day.
-     *
-     * @link https://en.wikipedia.org/wiki/Canada_Day
-     *
-     * @throws InvalidDateException
-     * @throws \InvalidArgumentException
-     * @throws UnknownLocaleException
-     * @throws \Exception
-     */
-    protected function calculateCanadaDay(): void
-    {
-        if ($this->year < 1983) {
-            return;
-        }
-
-        $this->addHoliday(new Holiday(
-            'canadaDay',
-            [],
-            new DateTime($this->year . '-07-01', DateTimeZoneFactory::getDateTimeZone($this->timezone)),
-            $this->locale
-        ));
-    }
-
-    /**
      * Civic Holiday.
      *
-     * @link https://en.wikipedia.org/wiki/Civic_Holiday
+     * @see https://en.wikipedia.org/wiki/Civic_Holiday
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -180,25 +166,25 @@ class Canada extends AbstractProvider
     }
 
     /**
-     * Labour Day.
+     * Canada Day.
      *
-     * @link https://en.wikipedia.org/wiki/Labour_Day
+     * @see https://en.wikipedia.org/wiki/Canada_Day
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
      */
-    private function calculateLabourDay(): void
+    private function calculateCanadaDay(): void
     {
-        if ($this->year < 1894) {
+        if ($this->year < 1983) {
             return;
         }
 
         $this->addHoliday(new Holiday(
-            'labourDay',
+            'canadaDay',
             [],
-            new DateTime("first monday of september $this->year", DateTimeZoneFactory::getDateTimeZone($this->timezone)),
+            new DateTime($this->year.'-07-01', DateTimeZoneFactory::getDateTimeZone($this->timezone)),
             $this->locale
         ));
     }
@@ -206,14 +192,14 @@ class Canada extends AbstractProvider
     /**
      * Thanksgiving.
      *
-     * @link https://en.wikipedia.org/wiki/Thanksgiving_(Canada)
+     * @see https://en.wikipedia.org/wiki/Thanksgiving_(Canada)
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
      */
-    protected function calculateThanksgivingDay(): void
+    private function calculateThanksgivingDay(): void
     {
         if ($this->year < 1879) {
             return;
@@ -230,14 +216,14 @@ class Canada extends AbstractProvider
     /**
      * Remembrance Day.
      *
-     * @link https://en.wikipedia.org/wiki/Remembrance_Day_(Canada)
+     * @see https://en.wikipedia.org/wiki/Remembrance_Day_(Canada)
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
      */
-    protected function calculateRemembranceDay(): void
+    private function calculateRemembranceDay(): void
     {
         if ($this->year < 1919) {
             return;
@@ -247,6 +233,30 @@ class Canada extends AbstractProvider
             'remembranceDay',
             [],
             new DateTime("$this->year-11-11", DateTimeZoneFactory::getDateTimeZone($this->timezone)),
+            $this->locale
+        ));
+    }
+
+    /**
+     * Labour Day.
+     *
+     * @see https://en.wikipedia.org/wiki/Labour_Day
+     *
+     * @throws InvalidDateException
+     * @throws \InvalidArgumentException
+     * @throws UnknownLocaleException
+     * @throws \Exception
+     */
+    private function calculateLabourDay(): void
+    {
+        if ($this->year < 1894) {
+            return;
+        }
+
+        $this->addHoliday(new Holiday(
+            'labourDay',
+            [],
+            new DateTime("first monday of september $this->year", DateTimeZoneFactory::getDateTimeZone($this->timezone)),
             $this->locale
         ));
     }

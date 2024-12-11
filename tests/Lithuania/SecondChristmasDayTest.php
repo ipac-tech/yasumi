@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,22 +19,21 @@ use DateTime;
 use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
  * Class containing tests for Second Christmas day in Lithuania.
  *
  * @author Gedas Lukošius <gedas@lukosius.me>
  */
-class SecondChristmasDayTest extends LithuaniaBaseTestCase implements YasumiTestCaseInterface
+class SecondChristmasDayTest extends LithuaniaBaseTestCase implements HolidayTestCase
 {
     /**
-     * The name of the holiday to be tested
+     * The name of the holiday to be tested.
      */
     public const HOLIDAY = 'secondChristmasDay';
 
     /**
-     * @return array
      * @throws Exception
      */
     public function holidayDataProvider(): array
@@ -43,18 +44,16 @@ class SecondChristmasDayTest extends LithuaniaBaseTestCase implements YasumiTest
     /**
      * @dataProvider holidayDataProvider
      *
-     * @param int $year
-     * @param DateTime $expected
-     *
      * @throws ReflectionException
      */
-    public function testHoliday($year, DateTime $expected): void
+    public function testHoliday(int $year, DateTime $expected): void
     {
         $this->assertHoliday(self::REGION, self::HOLIDAY, $year, $expected);
     }
 
     /**
      * {@inheritdoc}
+     *
      * @throws ReflectionException
      */
     public function testTranslation(): void
@@ -69,6 +68,7 @@ class SecondChristmasDayTest extends LithuaniaBaseTestCase implements YasumiTest
 
     /**
      * {@inheritdoc}
+     *
      * @throws ReflectionException
      */
     public function testHolidayType(): void

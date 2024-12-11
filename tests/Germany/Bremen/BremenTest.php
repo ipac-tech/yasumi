@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +16,12 @@ namespace Yasumi\tests\Germany\Bremen;
 
 use ReflectionException;
 use Yasumi\Holiday;
+use Yasumi\tests\ProviderTestCase;
 
 /**
- * Class for testing holidays in Bremen (Germany)
+ * Class for testing holidays in Bremen (Germany).
  */
-class BremenTest extends BremenBaseTestCase
+class BremenTest extends BremenBaseTestCase implements ProviderTestCase
 {
     /**
      * @var int year random year number used for all tests in this Test Case
@@ -26,7 +29,16 @@ class BremenTest extends BremenBaseTestCase
     protected $year;
 
     /**
-     * Tests if all official holidays in Bremen (Germany) are defined by the provider class
+     * Initial setup of this Test Case.
+     */
+    protected function setUp(): void
+    {
+        $this->year = $this->generateRandomYear(1990);
+    }
+
+    /**
+     * Tests if all official holidays in Bremen (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOfficialHolidays(): void
@@ -45,7 +57,8 @@ class BremenTest extends BremenBaseTestCase
     }
 
     /**
-     * Tests if all observed holidays in Bremen (Germany) are defined by the provider class
+     * Tests if all observed holidays in Bremen (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testObservedHolidays(): void
@@ -54,7 +67,8 @@ class BremenTest extends BremenBaseTestCase
     }
 
     /**
-     * Tests if all seasonal holidays in Bremen (Germany) are defined by the provider class
+     * Tests if all seasonal holidays in Bremen (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testSeasonalHolidays(): void
@@ -63,7 +77,8 @@ class BremenTest extends BremenBaseTestCase
     }
 
     /**
-     * Tests if all bank holidays in Bremen (Germany) are defined by the provider class
+     * Tests if all bank holidays in Bremen (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testBankHolidays(): void
@@ -72,7 +87,8 @@ class BremenTest extends BremenBaseTestCase
     }
 
     /**
-     * Tests if all other holidays in Bremen (Germany) are defined by the provider class
+     * Tests if all other holidays in Bremen (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOtherHolidays(): void
@@ -81,10 +97,10 @@ class BremenTest extends BremenBaseTestCase
     }
 
     /**
-     * Initial setup of this Test Case
+     * @throws ReflectionException
      */
-    protected function setUp(): void
+    public function testSources(): void
     {
-        $this->year = $this->generateRandomYear(1990);
+        $this->assertSources(self::REGION, 2);
     }
 }

@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,11 +25,12 @@ use Yasumi\SubstituteHoliday;
 /**
  * Provider for all holidays in the South Korea except for election day and temporary public holiday.
  *
- * @link https://en.wikipedia.org/wiki/Public_holidays_in_South_Korea
+ * @see https://en.wikipedia.org/wiki/Public_holidays_in_South_Korea
  */
 class SouthKorea extends AbstractProvider
 {
-    use CommonHolidays, ChristianHolidays;
+    use CommonHolidays;
+    use ChristianHolidays;
 
     /**
      * Code to identify this Holiday Provider. Typically this is the ISO3166 code corresponding to the respective
@@ -36,21 +39,22 @@ class SouthKorea extends AbstractProvider
     public const ID = 'KR';
 
     /**
-     * Dates in Gregorian calendar of Seollal, Buddha's Birthday, and Chuseok (~ 2050)
+     * Dates in Gregorian calendar of Seollal, Buddha's Birthday, and Chuseok (~ 2050).
      *
      * The Korean calendar is derived from the Chinese calendar. Although not being an official calendar, the
      * traditional Korean calendar is still maintained by the government. The current version is based on China's
      * Shixian calendar, which was in turn developed by Jesuit scholars. However, because the Korean calendar is now
      * based on the moon's shape seen from Korea, occasionally the calendar diverges from the traditional Chinese
      * calendar by one day, even though the underlying rule is the same.
-     * @link https://en.wikipedia.org/wiki/Korean_calendar
+     *
+     * @see https://en.wikipedia.org/wiki/Korean_calendar
      *
      * To convert from lunar calendar to Gregorian calendar, lunar observation is necessary.
      * There is no perfect formula, and as it moves away from the current date, the error becomes bigger.
      * Korea Astronomy and Space Science Institute (KASI) is supporting the converter until 2050.
      * For more information, please refer to the paper below.
      * 박(2017)총,32(3),407-420.
-     * @link https://www.kasi.re.kr/kor/research/paper/20170259 - Korea Astronomy and Space Science Institute
+     * @see https://www.kasi.re.kr/kor/research/paper/20170259 - Korea Astronomy and Space Science Institute
      */
     public const LUNAR_HOLIDAY = [
         'seollal' => [
@@ -64,7 +68,7 @@ class SouthKorea extends AbstractProvider
             2020 => '2020-1-25', 2021 => '2021-2-12', 2022 => '2022-2-1', 2023 => '2023-1-22', 2024 => '2024-2-10',
             2025 => '2025-1-29', 2026 => '2026-2-17', 2027 => '2027-2-7', 2028 => '2028-1-27', 2029 => '2029-2-13',
             2030 => '2030-2-3', 2031 => '2031-1-23', 2032 => '2032-2-11', 2033 => '2033-1-31', 2034 => '2034-2-19',
-            2035 => '2035-2-8', 2036 => '2036-1-28', 2037 => '2037-2-15', 2038 => '2038-2-4', 2039 => '2037-1-24',
+            2035 => '2035-2-8', 2036 => '2036-1-28', 2037 => '2037-2-15', 2038 => '2038-2-4', 2039 => '2039-1-24',
             2040 => '2040-2-12', 2041 => '2041-2-1', 2042 => '2042-1-22', 2043 => '2043-2-10', 2044 => '2044-1-30',
             2045 => '2045-2-17', 2046 => '2046-2-6', 2047 => '2047-1-26', 2048 => '2048-2-14', 2049 => '2049-2-2',
             2050 => '2050-1-23',
@@ -148,15 +152,23 @@ class SouthKorea extends AbstractProvider
         $this->calculateSubstituteHolidays();
     }
 
+    public function getSources(): array
+    {
+        return [
+            'https://en.wikipedia.org/wiki/Public_holidays_in_South_Korea',
+            'https://ko.wikipedia.org/wiki/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%9D%98_%EA%B3%B5%ED%9C%B4%EC%9D%BC',
+        ];
+    }
+
     /**
      * New Year's Day. New Year's Day is held on January 1st and established since 1950.
      * From the enactment of the First Law to 1998, there was a two or three-day break in the New Year.
      *
-     * @link https://en.wikipedia.org/wiki/New_Year%27s_Day#East_Asian
+     * @see https://en.wikipedia.org/wiki/New_Year%27s_Day#East_Asian
      *
      * @throws \Exception
      */
-    public function calculateNewYearsDay(): void
+    private function calculateNewYearsDay(): void
     {
         if ($this->year >= 1950) {
             $this->addHoliday($this->newYearsDay($this->year, $this->timezone, $this->locale));
@@ -183,11 +195,11 @@ class SouthKorea extends AbstractProvider
      * Seollal (Korean New Year's Day).
      * Seollal is held on the 1st day of the 1st lunar month and was established from 1985.
      *
-     * @link https://en.wikipedia.org/wiki/Korean_New_Year
+     * @see https://en.wikipedia.org/wiki/Korean_New_Year
      *
      * @throws \Exception
      */
-    public function calculateSeollal(): void
+    private function calculateSeollal(): void
     {
         if ($this->year >= 1985 && isset(self::LUNAR_HOLIDAY['seollal'][$this->year])) {
             $seollal = new DateTime(self::LUNAR_HOLIDAY['seollal'][$this->year], DateTimeZoneFactory::getDateTimeZone($this->timezone));
@@ -221,11 +233,11 @@ class SouthKorea extends AbstractProvider
     /**
      * Buddha's Birthday is held on the 8th day of the 4th lunar month and was established since 1975.
      *
-     * @link https://en.wikipedia.org/wiki/Buddha%27s_Birthday
+     * @see https://en.wikipedia.org/wiki/Buddha%27s_Birthday
      *
      * @throws \Exception
      */
-    public function calculateBuddhasBirthday(): void
+    private function calculateBuddhasBirthday(): void
     {
         if ($this->year >= 1975 && isset(self::LUNAR_HOLIDAY['buddhasBirthday'][$this->year])) {
             $this->addHoliday(new Holiday(
@@ -243,11 +255,11 @@ class SouthKorea extends AbstractProvider
      * Chuseok, one of the biggest holidays in Korea, is a major harvest festival and a three-day holiday celebrated on
      * the 15th day of the 8th month of the lunar calendar on the full moon.
      *
-     * @link https://en.wikipedia.org/wiki/Chuseok
+     * @see https://en.wikipedia.org/wiki/Chuseok
      *
      * @throws \Exception
      */
-    public function calculateChuseok(): void
+    private function calculateChuseok(): void
     {
         if ($this->year >= 1949 && isset(self::LUNAR_HOLIDAY['chuseok'][$this->year])) {
             // Chuseok
@@ -284,11 +296,11 @@ class SouthKorea extends AbstractProvider
     /**
      * Independence Movement Day. Independence Movement Day is held on March 1st and was established from 1949.
      *
-     * @link https://en.wikipedia.org/wiki/Independence_Movement_Day
+     * @see https://en.wikipedia.org/wiki/Independence_Movement_Day
      *
      * @throws \Exception
      */
-    public function calculateIndependenceMovementDay(): void
+    private function calculateIndependenceMovementDay(): void
     {
         if ($this->year >= 1949) {
             $this->addHoliday(new Holiday(
@@ -303,11 +315,11 @@ class SouthKorea extends AbstractProvider
     /**
      * Sikmogil (Arbor Day). Sikmogil is held on May 5th and established since 1949.
      *
-     * @link https://en.wikipedia.org/wiki/Sikmogil
+     * @see https://en.wikipedia.org/wiki/Sikmogil
      *
      * @throws \Exception
      */
-    public function calculateArborDay(): void
+    private function calculateArborDay(): void
     {
         if (($this->year >= 1949 && $this->year < 1960) || ($this->year > 1960 && $this->year < 2006)) {
             $this->addHoliday(new Holiday(
@@ -322,11 +334,11 @@ class SouthKorea extends AbstractProvider
     /**
      * Children's Day. Children's Day is held on May 5th and established since 1970.
      *
-     * @link https://en.wikipedia.org/wiki/Children%27s_Day#South_Korea
+     * @see https://en.wikipedia.org/wiki/Children%27s_Day#South_Korea
      *
      * @throws \Exception
      */
-    public function calculateChildrensDay(): void
+    private function calculateChildrensDay(): void
     {
         if ($this->year >= 1970) {
             $this->addHoliday(new Holiday(
@@ -341,11 +353,11 @@ class SouthKorea extends AbstractProvider
     /**
      * Memorial Day. Memorial Day is held on June 6th and established since 1956.
      *
-     * @link https://en.wikipedia.org/wiki/Memorial_Day_(South_Korea)
+     * @see https://en.wikipedia.org/wiki/Memorial_Day_(South_Korea)
      *
      * @throws \Exception
      */
-    public function calculateMemorialDay(): void
+    private function calculateMemorialDay(): void
     {
         if ($this->year >= 1966) {
             $this->addHoliday(new Holiday(
@@ -363,11 +375,11 @@ class SouthKorea extends AbstractProvider
      * Constitution Day is held on July 17th and established since 1949.
      * Officially, it is a strict national holiday, but government offices and banks work normally after 2008.
      *
-     * @link https://en.wikipedia.org/wiki/Constitution_Day_(South_Korea)
+     * @see https://en.wikipedia.org/wiki/Constitution_Day_(South_Korea)
      *
      * @throws \Exception
      */
-    public function calculateConstitutionDay(): void
+    private function calculateConstitutionDay(): void
     {
         if ($this->year >= 1949 && $this->year < 2008) {
             $this->addHoliday(new Holiday(
@@ -382,11 +394,11 @@ class SouthKorea extends AbstractProvider
     /**
      * Liberation Day. Liberation Day is held on August 15th and established since 1949.
      *
-     * @link https://en.wikipedia.org/wiki/National_Liberation_Day_of_Korea
+     * @see https://en.wikipedia.org/wiki/National_Liberation_Day_of_Korea
      *
      * @throws \Exception
      */
-    public function calculateLiberationDay(): void
+    private function calculateLiberationDay(): void
     {
         if ($this->year >= 1949) {
             $this->addHoliday(new Holiday(
@@ -401,11 +413,11 @@ class SouthKorea extends AbstractProvider
     /**
      * Armed Forces Day. Armed Forces Day is held on October 1st and established since 1956.
      *
-     * @link https://en.wikipedia.org/wiki/Armed_Forces_Day_(South_Korea)
+     * @see https://en.wikipedia.org/wiki/Armed_Forces_Day_(South_Korea)
      *
      * @throws \Exception
      */
-    public function calculateArmedForcesDay(): void
+    private function calculateArmedForcesDay(): void
     {
         if ($this->year >= 1956 && $this->year <= 1990) {
             $this->addHoliday(new Holiday(
@@ -420,11 +432,11 @@ class SouthKorea extends AbstractProvider
     /**
      * Gaecheonjeol (National Foundation Day). Gaecheonjeol is held on October 3rd and established since 1949.
      *
-     * @link https://en.wikipedia.org/wiki/Gaecheonjeol
+     * @see https://en.wikipedia.org/wiki/Gaecheonjeol
      *
      * @throws \Exception
      */
-    public function calculateNationalFoundationDay(): void
+    private function calculateNationalFoundationDay(): void
     {
         if ($this->year >= 1949) {
             $this->addHoliday(new Holiday(
@@ -439,11 +451,11 @@ class SouthKorea extends AbstractProvider
     /**
      * Hangul Day. Hangul Day is held on October 9th and established since 1949.
      *
-     * @link https://en.wikipedia.org/wiki/Hangul_Day
+     * @see https://en.wikipedia.org/wiki/Hangul_Day
      *
      * @throws \Exception
      */
-    public function calculateHangulDay(): void
+    private function calculateHangulDay(): void
     {
         if (($this->year >= 1949 && $this->year <= 1990) || $this->year > 2012) {
             $this->addHoliday(new Holiday(
@@ -457,7 +469,7 @@ class SouthKorea extends AbstractProvider
 
     /**
      * Substitute Holidays.
-     * Related statutes: Article 3 Alternative Statutory Holidays of the Regulations on Holidays of Government Offices
+     * Related statutes: Article 3 Alternative Statutory Holidays of the Regulations on Holidays of Government Offices.
      *
      * Since 2014, it has been applied only on Seollal, Chuseok and Children's Day.
      * Due to the lunar calendar, public holidays can overlap even if it's not a Sunday.
@@ -466,7 +478,7 @@ class SouthKorea extends AbstractProvider
      *
      * @throws \Exception
      */
-    public function calculateSubstituteHolidays(): void
+    private function calculateSubstituteHolidays(): void
     {
         if ($this->year <= 2013) {
             return;
@@ -483,8 +495,8 @@ class SouthKorea extends AbstractProvider
         // Loop through all holidays
         foreach ($holidays as $key => $holiday) {
             // Get list of holiday dates except this
-            $holidayDates = \array_map(static function ($holiday) use ($key) {
-                return $holiday->getKey() === $key ? false : (string) $holiday;
+            $holidayDates = array_map(static function ($holiday) use ($key) {
+                return $holiday->getKey() === $key ? false : $holiday;
             }, $holidays);
 
             // Only process accepted holidays and conditions
@@ -502,7 +514,6 @@ class SouthKorea extends AbstractProvider
                     || (6 === (int) $date->format('w') && 'childrensDay' === $key)
                     || \in_array($date, $holidayDates, false)) {
                     $date->add(new DateInterval('P1D'));
-                    continue;
                 }
 
                 // Add a new holiday that is substituting the original holiday

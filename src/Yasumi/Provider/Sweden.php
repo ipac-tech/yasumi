@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +25,8 @@ use Yasumi\Holiday;
  */
 class Sweden extends AbstractProvider
 {
-    use CommonHolidays, ChristianHolidays;
+    use CommonHolidays;
+    use ChristianHolidays;
 
     /**
      * Code to identify this Holiday Provider. Typically this is the ISO3166 code corresponding to the respective
@@ -68,6 +71,14 @@ class Sweden extends AbstractProvider
         $this->calculateNationalDay();
     }
 
+    public function getSources(): array
+    {
+        return [
+            'https://en.wikipedia.org/wiki/Public_holidays_in_Sweden',
+            'https://sv.wikipedia.org/wiki/Helgdagar_i_Sverige',
+        ];
+    }
+
     /**
      * Epiphany Eve.
      *
@@ -77,14 +88,14 @@ class Sweden extends AbstractProvider
      *
      * Epiphany Eve is often treated with the afternoon off, but this varies depending on employer.
      *
-     * @link https://en.wikipedia.org/wiki/Twelfth_Night_(holiday)
+     * @see https://en.wikipedia.org/wiki/Twelfth_Night_(holiday)
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function calculateEpiphanyEve(): void
+    private function calculateEpiphanyEve(): void
     {
         $this->addHoliday(new Holiday(
             'epiphanyEve',
@@ -95,7 +106,6 @@ class Sweden extends AbstractProvider
         ));
     }
 
-
     /**
      * Walpurgis Night.
      *
@@ -105,14 +115,14 @@ class Sweden extends AbstractProvider
      *
      * Walpurgis Night is often treated with the afternoon off, but this varies depending on employer.
      *
-     * @link https://en.wikipedia.org/wiki/Walpurgis_Night
+     * @see https://en.wikipedia.org/wiki/Walpurgis_Night
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function calculateWalpurgisEve(): void
+    private function calculateWalpurgisEve(): void
     {
         $this->addHoliday(new Holiday(
             'walpurgisEve',
@@ -135,7 +145,7 @@ class Sweden extends AbstractProvider
      * In Sweden the holiday has always been on a Saturday (between June 20 and June 26). Many of the celebrations of
      * midsummer take place on midsummer eve, when many workplaces are closed and shops must close their doors at noon.
      *
-     * @link https://en.wikipedia.org/wiki/Midsummer#Sweden
+     * @see https://en.wikipedia.org/wiki/Midsummer#Sweden
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -175,8 +185,8 @@ class Sweden extends AbstractProvider
      * the dead. In the Swedish calendar, the observance takes place on the Saturday between 31 October and 6 November.
      * In many Lutheran Churches, it is moved to the first Sunday of November.
      *
-     * @link https://en.wikipedia.org/wiki/All_Saints%27_Day
-     * @link https://www.timeanddate.com/holidays/sweden/all-saints-day
+     * @see https://en.wikipedia.org/wiki/All_Saints%27_Day
+     * @see https://www.timeanddate.com/holidays/sweden/all-saints-day
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -204,7 +214,7 @@ class Sweden extends AbstractProvider
     }
 
     /**
-     * National Day
+     * National Day.
      *
      * National Day of Sweden (Sveriges nationaldag) is a national holiday observed in Sweden on 6 June every year.
      * Prior to 1983, the day was celebrated as Svenska flaggans dag (Swedish flag day). At that time, the day was

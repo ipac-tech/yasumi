@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,7 +19,7 @@ use DateTimeZone;
 use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
  * Class for testing the 2016 Substitute Day of Goodwill in South Africa.
@@ -26,20 +28,21 @@ use Yasumi\tests\YasumiTestCaseInterface;
  * determines whenever any public holiday falls on a Sunday, the Monday following on it shall be a public holiday.
  * Yasumi currently implements all South African holidays based on this act.
  */
-class SubstituteDayOfGoodwillTest extends SouthAfricaBaseTestCase implements YasumiTestCaseInterface
+class SubstituteDayOfGoodwillTest extends SouthAfricaBaseTestCase implements HolidayTestCase
 {
     /**
-     * The name of the holiday to be tested
+     * The name of the holiday to be tested.
      */
     public const HOLIDAY = 'substituteDayOfGoodwill';
 
     /**
-     * The year in which the holiday was first established
+     * The year in which the holiday was first established.
      */
     public const ESTABLISHMENT_YEAR = 2016;
 
     /**
      * Tests the holiday defined in this test on or after establishment.
+     *
      * @throws Exception
      * @throws ReflectionException
      */
@@ -49,12 +52,13 @@ class SubstituteDayOfGoodwillTest extends SouthAfricaBaseTestCase implements Yas
             self::REGION,
             self::HOLIDAY,
             self::ESTABLISHMENT_YEAR,
-            new DateTime(self::ESTABLISHMENT_YEAR . '-12-27', new DateTimeZone(self::TIMEZONE))
+            new DateTime(self::ESTABLISHMENT_YEAR.'-12-27', new DateTimeZone(self::TIMEZONE))
         );
     }
 
     /**
      * Tests the holiday defined in this test before establishment.
+     *
      * @throws ReflectionException
      */
     public function testHolidayBeforeEstablishment(): void
@@ -68,6 +72,7 @@ class SubstituteDayOfGoodwillTest extends SouthAfricaBaseTestCase implements Yas
 
     /**
      * Tests the holiday defined in this test after completion.
+     *
      * @throws ReflectionException
      */
     public function testHolidayDayAfterCompletion(): void
@@ -77,6 +82,7 @@ class SubstituteDayOfGoodwillTest extends SouthAfricaBaseTestCase implements Yas
 
     /**
      * Tests the translated name of the holiday defined in this test.
+     *
      * @throws ReflectionException
      */
     public function testTranslation(): void
@@ -91,6 +97,7 @@ class SubstituteDayOfGoodwillTest extends SouthAfricaBaseTestCase implements Yas
 
     /**
      * Tests type of the holiday defined in this test.
+     *
      * @throws ReflectionException
      */
     public function testHolidayType(): void

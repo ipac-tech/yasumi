@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +16,12 @@ namespace Yasumi\tests\Japan;
 
 use ReflectionException;
 use Yasumi\Holiday;
+use Yasumi\tests\ProviderTestCase;
 
 /**
  * Class for testing holidays in Japan.
  */
-class JapanTest extends JapanBaseTestCase
+class JapanTest extends JapanBaseTestCase implements ProviderTestCase
 {
     /**
      * @var int year random year number used for all tests in this Test Case
@@ -26,7 +29,16 @@ class JapanTest extends JapanBaseTestCase
     protected $year;
 
     /**
-     * Tests if all official holidays in Japan are defined by the provider class
+     * Initial setup of this Test Case.
+     */
+    protected function setUp(): void
+    {
+        $this->year = $this->generateRandomYear(2020, 2150);
+    }
+
+    /**
+     * Tests if all official holidays in Japan are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOfficialHolidays(): void
@@ -52,7 +64,8 @@ class JapanTest extends JapanBaseTestCase
     }
 
     /**
-     * Tests if all official holidays in Japan At 2019 are defined by the provider class
+     * Tests if all official holidays in Japan At 2019 are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOfficialHolidaysAt2019(): void
@@ -79,7 +92,8 @@ class JapanTest extends JapanBaseTestCase
     }
 
     /**
-     * Tests if all observed holidays in Japan are defined by the provider class
+     * Tests if all observed holidays in Japan are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testObservedHolidays(): void
@@ -88,7 +102,8 @@ class JapanTest extends JapanBaseTestCase
     }
 
     /**
-     * Tests if all seasonal holidays in Japan are defined by the provider class
+     * Tests if all seasonal holidays in Japan are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testSeasonalHolidays(): void
@@ -97,7 +112,8 @@ class JapanTest extends JapanBaseTestCase
     }
 
     /**
-     * Tests if all bank holidays in Japan are defined by the provider class
+     * Tests if all bank holidays in Japan are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testBankHolidays(): void
@@ -106,7 +122,8 @@ class JapanTest extends JapanBaseTestCase
     }
 
     /**
-     * Tests if all other holidays in Japan are defined by the provider class
+     * Tests if all other holidays in Japan are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOtherHolidays(): void
@@ -115,10 +132,10 @@ class JapanTest extends JapanBaseTestCase
     }
 
     /**
-     * Initial setup of this Test Case
+     * @throws ReflectionException
      */
-    protected function setUp(): void
+    public function testSources(): void
     {
-        $this->year = $this->generateRandomYear(2020, 2150);
+        $this->assertSources(self::REGION, 2);
     }
 }

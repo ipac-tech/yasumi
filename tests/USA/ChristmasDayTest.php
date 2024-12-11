@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,20 +19,21 @@ use DateTimeZone;
 use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
  * Class for testing New Years Day in the USA.
  */
-class ChristmasDayTest extends USABaseTestCase implements YasumiTestCaseInterface
+class ChristmasDayTest extends USABaseTestCase implements HolidayTestCase
 {
     /**
-     * The name of the holiday
+     * The name of the holiday.
      */
     public const HOLIDAY = 'christmasDay';
 
     /**
      * Tests Christmas Day. Christmas Day is celebrated on December 25th.
+     *
      * @throws Exception
      * @throws ReflectionException
      */
@@ -47,6 +50,7 @@ class ChristmasDayTest extends USABaseTestCase implements YasumiTestCaseInterfac
 
     /**
      * Tests Christmas Day substituted on Monday (when Christmas Day falls on Sunday).
+     *
      * @throws Exception
      * @throws ReflectionException
      */
@@ -64,6 +68,7 @@ class ChristmasDayTest extends USABaseTestCase implements YasumiTestCaseInterfac
 
     /**
      * Tests Christmas Day substituted on Monday (when Christmas Day falls on Saturday).
+     *
      * @throws Exception
      * @throws ReflectionException
      */
@@ -81,6 +86,7 @@ class ChristmasDayTest extends USABaseTestCase implements YasumiTestCaseInterfac
 
     /**
      * Tests translated name of the holiday defined in this test.
+     *
      * @throws ReflectionException
      */
     public function testTranslation(): void
@@ -95,6 +101,7 @@ class ChristmasDayTest extends USABaseTestCase implements YasumiTestCaseInterfac
 
     /**
      * Tests type of the holiday defined in this test.
+     *
      * @throws ReflectionException
      */
     public function testHolidayType(): void

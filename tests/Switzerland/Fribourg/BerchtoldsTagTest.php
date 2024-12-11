@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,27 +12,27 @@
  * @author Sacha Telgenhof <me@sachatelgenhof.com>
  */
 
-namespace Yasumi\tests\Switzerland\Neuchatel;
+namespace Yasumi\tests\Switzerland\Fribourg;
 
 use DateTime;
 use DateTimeZone;
 use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
- * Class for testing BerchtoldsTag in Neuchatel (Switzerland).
+ * Class for testing BerchtoldsTag in Fribourg (Switzerland).
  */
-class BerchtoldsTagTest extends NeuchatelBaseTestCase implements YasumiTestCaseInterface
+class BerchtoldsTagTest extends FribourgBaseTestCase implements HolidayTestCase
 {
     /**
-     * The name of the holiday
+     * The name of the holiday.
      */
     public const HOLIDAY = 'berchtoldsTag';
 
     /**
-     * Tests BerchtoldsTag
+     * Tests BerchtoldsTag.
      *
      * @throws ReflectionException
      * @throws Exception
@@ -38,7 +40,7 @@ class BerchtoldsTagTest extends NeuchatelBaseTestCase implements YasumiTestCaseI
     public function testBerchtoldsTag(): void
     {
         $year = $this->generateRandomYear();
-        $date = new DateTime($year . '-01-02', new DateTimeZone(self::TIMEZONE));
+        $date = new DateTime($year.'-01-02', new DateTimeZone(self::TIMEZONE));
 
         $this->assertHoliday(self::REGION, self::HOLIDAY, $year, $date);
         $this->assertHolidayType(self::REGION, self::HOLIDAY, $year, Holiday::TYPE_OTHER);
@@ -46,6 +48,7 @@ class BerchtoldsTagTest extends NeuchatelBaseTestCase implements YasumiTestCaseI
 
     /**
      * Tests translated name of BerchtoldsTag.
+     *
      * @throws ReflectionException
      */
     public function testTranslation(): void
@@ -60,6 +63,7 @@ class BerchtoldsTagTest extends NeuchatelBaseTestCase implements YasumiTestCaseI
 
     /**
      * Tests type of the holiday defined in this test.
+     *
      * @throws ReflectionException
      */
     public function testHolidayType(): void

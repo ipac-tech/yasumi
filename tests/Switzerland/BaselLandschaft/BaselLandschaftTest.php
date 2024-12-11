@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +16,12 @@ namespace Yasumi\tests\Switzerland\BaselLandschaft;
 
 use ReflectionException;
 use Yasumi\Holiday;
+use Yasumi\tests\ProviderTestCase;
 
 /**
  * Class for testing holidays in Basel Landschaft (Switzerland).
  */
-class BaselLandschaftTest extends BaselLandschaftBaseTestCase
+class BaselLandschaftTest extends BaselLandschaftBaseTestCase implements ProviderTestCase
 {
     /**
      * @var int year random year number used for all tests in this Test Case
@@ -26,7 +29,16 @@ class BaselLandschaftTest extends BaselLandschaftBaseTestCase
     protected $year;
 
     /**
-     * Tests if all official holidays in BaselLandschaft (Switzerland) are defined by the provider class
+     * Initial setup of this Test Case.
+     */
+    protected function setUp(): void
+    {
+        $this->year = $this->generateRandomYear(1945);
+    }
+
+    /**
+     * Tests if all official holidays in BaselLandschaft (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOfficialHolidays(): void
@@ -39,7 +51,8 @@ class BaselLandschaftTest extends BaselLandschaftBaseTestCase
     }
 
     /**
-     * Tests if all regional holidays in BaselLandschaft (Switzerland) are defined by the provider class
+     * Tests if all regional holidays in BaselLandschaft (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testRegionalHolidays(): void
@@ -57,7 +70,8 @@ class BaselLandschaftTest extends BaselLandschaftBaseTestCase
     }
 
     /**
-     * Tests if all observed holidays in BaselLandschaft (Switzerland) are defined by the provider class
+     * Tests if all observed holidays in BaselLandschaft (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testObservedHolidays(): void
@@ -71,7 +85,8 @@ class BaselLandschaftTest extends BaselLandschaftBaseTestCase
     }
 
     /**
-     * Tests if all seasonal holidays in BaselLandschaft (Switzerland) are defined by the provider class
+     * Tests if all seasonal holidays in BaselLandschaft (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testSeasonalHolidays(): void
@@ -80,7 +95,8 @@ class BaselLandschaftTest extends BaselLandschaftBaseTestCase
     }
 
     /**
-     * Tests if all bank holidays in BaselLandschaft (Switzerland) are defined by the provider class
+     * Tests if all bank holidays in BaselLandschaft (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testBankHolidays(): void
@@ -89,7 +105,8 @@ class BaselLandschaftTest extends BaselLandschaftBaseTestCase
     }
 
     /**
-     * Tests if all other holidays in BaselLandschaft (Switzerland) are defined by the provider class
+     * Tests if all other holidays in BaselLandschaft (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOtherHolidays(): void
@@ -98,10 +115,10 @@ class BaselLandschaftTest extends BaselLandschaftBaseTestCase
     }
 
     /**
-     * Initial setup of this Test Case
+     * @throws ReflectionException
      */
-    protected function setUp(): void
+    public function testSources(): void
     {
-        $this->year = $this->generateRandomYear(1945);
+        $this->assertSources(self::REGION, 3);
     }
 }

@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +16,12 @@ namespace Yasumi\tests\Germany\SaxonyAnhalt;
 
 use ReflectionException;
 use Yasumi\Holiday;
+use Yasumi\tests\ProviderTestCase;
 
 /**
- * Class for testing holidays in Saxony-Anhalt (Germany)
+ * Class for testing holidays in Saxony-Anhalt (Germany).
  */
-class SaxonyAnhaltTest extends SaxonyAnhaltBaseTestCase
+class SaxonyAnhaltTest extends SaxonyAnhaltBaseTestCase implements ProviderTestCase
 {
     /**
      * @var int year random year number used for all tests in this Test Case
@@ -26,7 +29,16 @@ class SaxonyAnhaltTest extends SaxonyAnhaltBaseTestCase
     protected $year;
 
     /**
-     * Tests if all official holidays in Saxony-Anhalt (Germany) are defined by the provider class
+     * Initial setup of this Test Case.
+     */
+    protected function setUp(): void
+    {
+        $this->year = $this->generateRandomYear();
+    }
+
+    /**
+     * Tests if all official holidays in Saxony-Anhalt (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOfficialHolidays(): void
@@ -54,7 +66,8 @@ class SaxonyAnhaltTest extends SaxonyAnhaltBaseTestCase
     }
 
     /**
-     * Tests if all observed holidays in Saxony-Anhalt (Germany) are defined by the provider class
+     * Tests if all observed holidays in Saxony-Anhalt (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testObservedHolidays(): void
@@ -63,7 +76,8 @@ class SaxonyAnhaltTest extends SaxonyAnhaltBaseTestCase
     }
 
     /**
-     * Tests if all seasonal holidays in Saxony-Anhalt (Germany) are defined by the provider class
+     * Tests if all seasonal holidays in Saxony-Anhalt (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testSeasonalHolidays(): void
@@ -72,7 +86,8 @@ class SaxonyAnhaltTest extends SaxonyAnhaltBaseTestCase
     }
 
     /**
-     * Tests if all bank holidays in Saxony-Anhalt (Germany) are defined by the provider class
+     * Tests if all bank holidays in Saxony-Anhalt (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testBankHolidays(): void
@@ -81,7 +96,8 @@ class SaxonyAnhaltTest extends SaxonyAnhaltBaseTestCase
     }
 
     /**
-     * Tests if all other holidays in Saxony-Anhalt (Germany) are defined by the provider class
+     * Tests if all other holidays in Saxony-Anhalt (Germany) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOtherHolidays(): void
@@ -90,10 +106,10 @@ class SaxonyAnhaltTest extends SaxonyAnhaltBaseTestCase
     }
 
     /**
-     * Initial setup of this Test Case
+     * @throws ReflectionException
      */
-    protected function setUp(): void
+    public function testSources(): void
     {
-        $this->year = $this->generateRandomYear();
+        $this->assertSources(self::REGION, 2);
     }
 }

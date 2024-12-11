@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,17 +21,17 @@ use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
 use Yasumi\Provider\Lithuania;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
  * Class containing tests for All Souls' Day in Lithuania.
  *
  * @author Tomas Norkūnas <norkunas.tom@gmail.com>
  */
-class AllSoulsDayTest extends LithuaniaBaseTestCase implements YasumiTestCaseInterface
+class AllSoulsDayTest extends LithuaniaBaseTestCase implements HolidayTestCase
 {
     /**
-     * The name of the holiday to be tested
+     * The name of the holiday to be tested.
      */
     public const HOLIDAY = 'allSoulsDay';
 
@@ -46,7 +48,8 @@ class AllSoulsDayTest extends LithuaniaBaseTestCase implements YasumiTestCaseInt
     }
 
     /**
-     * Test if holiday is defined after restoration
+     * Test if holiday is defined after restoration.
+     *
      * @throws Exception
      * @throws ReflectionException
      */
@@ -58,12 +61,13 @@ class AllSoulsDayTest extends LithuaniaBaseTestCase implements YasumiTestCaseInt
             self::REGION,
             self::HOLIDAY,
             $year,
-            new DateTime("{$year}-11-02", new DateTimeZone(self::TIMEZONE))
+            new DateTime("$year-11-02", new DateTimeZone(self::TIMEZONE))
         );
     }
 
     /**
      * {@inheritdoc}
+     *
      * @throws ReflectionException
      */
     public function testTranslation(): void
@@ -78,6 +82,7 @@ class AllSoulsDayTest extends LithuaniaBaseTestCase implements YasumiTestCaseInt
 
     /**
      * {@inheritdoc}
+     *
      * @throws ReflectionException
      */
     public function testHolidayType(): void

@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +16,12 @@ namespace Yasumi\tests\Switzerland\Jura;
 
 use ReflectionException;
 use Yasumi\Holiday;
+use Yasumi\tests\ProviderTestCase;
 
 /**
  * Class for testing holidays in Jura (Switzerland).
  */
-class JuraTest extends JuraBaseTestCase
+class JuraTest extends JuraBaseTestCase implements ProviderTestCase
 {
     /**
      * @var int year random year number used for all tests in this Test Case
@@ -26,7 +29,16 @@ class JuraTest extends JuraBaseTestCase
     protected $year;
 
     /**
-     * Tests if all official holidays in Jura (Switzerland) are defined by the provider class
+     * Initial setup of this Test Case.
+     */
+    protected function setUp(): void
+    {
+        $this->year = $this->generateRandomYear(1975);
+    }
+
+    /**
+     * Tests if all official holidays in Jura (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOfficialHolidays(): void
@@ -39,7 +51,8 @@ class JuraTest extends JuraBaseTestCase
     }
 
     /**
-     * Tests if all regional holidays in Jura (Switzerland) are defined by the provider class
+     * Tests if all regional holidays in Jura (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testRegionalHolidays(): void
@@ -53,15 +66,19 @@ class JuraTest extends JuraBaseTestCase
             'newYearsDay',
             'christmasDay',
             'ascensionDay',
+            'easter',
             'easterMonday',
+            'pentecost',
             'pentecostMonday',
             'berchtoldsTag',
             'plebisciteJurassien',
+            'bettagsMontag',
         ], self::REGION, $this->year, Holiday::TYPE_OTHER);
     }
 
     /**
-     * Tests if all observed holidays in Jura (Switzerland) are defined by the provider class
+     * Tests if all observed holidays in Jura (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testObservedHolidays(): void
@@ -75,7 +92,8 @@ class JuraTest extends JuraBaseTestCase
     }
 
     /**
-     * Tests if all seasonal holidays in Jura (Switzerland) are defined by the provider class
+     * Tests if all seasonal holidays in Jura (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testSeasonalHolidays(): void
@@ -84,7 +102,8 @@ class JuraTest extends JuraBaseTestCase
     }
 
     /**
-     * Tests if all bank holidays in Jura (Switzerland) are defined by the provider class
+     * Tests if all bank holidays in Jura (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testBankHolidays(): void
@@ -93,7 +112,8 @@ class JuraTest extends JuraBaseTestCase
     }
 
     /**
-     * Tests if all other holidays in Jura (Switzerland) are defined by the provider class
+     * Tests if all other holidays in Jura (Switzerland) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOtherHolidays(): void
@@ -102,10 +122,10 @@ class JuraTest extends JuraBaseTestCase
     }
 
     /**
-     * Initial setup of this Test Case
+     * @throws ReflectionException
      */
-    protected function setUp(): void
+    public function testSources(): void
     {
-        $this->year = $this->generateRandomYear(1975);
+        $this->assertSources(self::REGION, 3);
     }
 }

@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,15 +19,15 @@ use DateTimeZone;
 use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
  * Class containing tests for Corpus Christi in Portugal.
  */
-class CorpusChristiTest extends PortugalBaseTestCase implements YasumiTestCaseInterface
+class CorpusChristiTest extends PortugalBaseTestCase implements HolidayTestCase
 {
     /**
-     * The name of the holiday
+     * The name of the holiday.
      */
     public const HOLIDAY = 'corpusChristi';
 
@@ -41,6 +43,7 @@ class CorpusChristiTest extends PortugalBaseTestCase implements YasumiTestCaseIn
 
     /**
      * Tests the holiday defined in this test.
+     *
      * @throws ReflectionException
      * @throws Exception
      */
@@ -53,6 +56,7 @@ class CorpusChristiTest extends PortugalBaseTestCase implements YasumiTestCaseIn
 
     /**
      * Test that the holiday did not happen in 2013-2015.
+     *
      * @throws ReflectionException
      */
     public function testNotHoliday(): void
@@ -63,6 +67,7 @@ class CorpusChristiTest extends PortugalBaseTestCase implements YasumiTestCaseIn
 
     /**
      * Tests translated name of Corpus Christi.
+     *
      * @throws ReflectionException
      */
     public function testTranslation(): void

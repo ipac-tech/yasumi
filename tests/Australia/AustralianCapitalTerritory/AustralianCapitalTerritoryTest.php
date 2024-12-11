@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +16,12 @@ namespace Yasumi\tests\Australia\AustralianCapitalTerritory;
 
 use ReflectionException;
 use Yasumi\Holiday;
+use Yasumi\tests\ProviderTestCase;
 
 /**
  * Class for testing holidays in Australian Capital Territory (Australia).
  */
-class AustralianCapitalTerritoryTest extends AustralianCapitalTerritoryBaseTestCase
+class AustralianCapitalTerritoryTest extends AustralianCapitalTerritoryBaseTestCase implements ProviderTestCase
 {
     /**
      * @var int year random year number used for all tests in this Test Case
@@ -26,7 +29,16 @@ class AustralianCapitalTerritoryTest extends AustralianCapitalTerritoryBaseTestC
     protected $year;
 
     /**
-     * Tests if all official holidays in Australian Capital Territory (Australia) are defined by the provider class
+     * Initial setup of this Test Case.
+     */
+    protected function setUp(): void
+    {
+        $this->year = $this->generateRandomYear(2018, 2100);
+    }
+
+    /**
+     * Tests if all official holidays in Australian Capital Territory (Australia) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOfficialHolidays(): void
@@ -49,10 +61,10 @@ class AustralianCapitalTerritoryTest extends AustralianCapitalTerritoryBaseTestC
     }
 
     /**
-     * Initial setup of this Test Case
+     * @throws ReflectionException
      */
-    protected function setUp(): void
+    public function testSources(): void
     {
-        $this->year = $this->generateRandomYear(2018, 2100);
+        $this->assertSources($this->region, 1);
     }
 }

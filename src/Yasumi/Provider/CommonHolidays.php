@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,38 +27,6 @@ use Yasumi\Holiday;
 trait CommonHolidays
 {
     /**
-     * New Year's Eve.
-     *
-     * New Year's Eve is observed on December 31, the last day of the year on the modern Gregorian calendar as well as
-     * the Julian calendar. In present day, with most countries now using the Gregorian calendar as their de facto
-     * calendar, New Year's Eve is probably the most celebrated holiday, often observed with fireworks at the stroke of
-     * midnight as the new year starts in each time zone.
-     *
-     * @link https://en.wikipedia.org/wiki/New_Year%27s_Eve
-     *
-     * @param int $year the year for which New Year's Eve need to be created
-     * @param string $timezone the timezone in which New Year's Eve is celebrated
-     * @param string $locale the locale for which New Year's Eve need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
-     *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
-     *
-     * @throws InvalidDateException
-     * @throws UnknownLocaleException
-     * @throws \InvalidArgumentException
-     * @throws \Exception
-     */
-    public function newYearsEve(
-        int $year,
-        string $timezone,
-        string $locale,
-        string $type = Holiday::TYPE_OFFICIAL
-    ): Holiday {
-        return new Holiday('newYearsEve', [], new DateTime("$year-12-31", DateTimeZoneFactory::getDateTimeZone($timezone)), $locale, $type);
-    }
-
-    /**
      * New Year's Day.
      *
      * New Year's Day is observed on January 1, the first day of the year on the modern Gregorian calendar as well as
@@ -66,22 +36,20 @@ trait CommonHolidays
      * is probably the most celebrated public holiday, often observed with fireworks at the stroke of midnight as the
      * new year starts in each time zone.
      *
-     * @link https://en.wikipedia.org/wiki/New_Year%27s_Day
+     * @see https://en.wikipedia.org/wiki/New_Year%27s_Day
      *
-     * @param int $year the year for which New Year's Day need to be created
+     * @param int    $year     the year for which New Year's Day need to be created
      * @param string $timezone the timezone in which New Year's Day is celebrated
-     * @param string $locale the locale for which New Year's Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     * @param string $locale   the locale for which New Year's Day need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
      *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function newYearsDay(
+    protected function newYearsDay(
         int $year,
         string $timezone,
         string $locale,
@@ -99,22 +67,20 @@ trait CommonHolidays
      * Workers' Day by the Socialists and Communists of the Second International to commemorate the Haymarket affair in
      * Chicago that occurred on 4 May, 1886.
      *
-     * @link https://en.wikipedia.org/wiki/International_Workers%27_Day
+     * @see https://en.wikipedia.org/wiki/International_Workers%27_Day
      *
-     * @param int $year the year for which International Workers' Day need to be created
+     * @param int    $year     the year for which International Workers' Day need to be created
      * @param string $timezone the timezone in which International Workers' Day is celebrated
-     * @param string $locale the locale for which International Workers' Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     * @param string $locale   the locale for which International Workers' Day need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
      *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function internationalWorkersDay(
+    protected function internationalWorkersDay(
         int $year,
         string $timezone,
         string $locale,
@@ -130,6 +96,106 @@ trait CommonHolidays
     }
 
     /**
+     * St. Martin's Day.
+     *
+     * St. Martin's Day, also known as the Feast of St. Martin, Martinstag or Martinmas, the Feast of St Martin of Tours
+     * or Martin le Miséricordieux, is a time for feasting celebrations. This is the time when autumn wheat seeding was
+     * completed, and the annual slaughter of fattened cattle produced "Martinmas beef". Historically, hiring fairs were
+     * held where farm laborers would seek new posts. November 11 is the feast day of St. Martin of Tours, who started
+     * out as a Roman soldier.
+     *
+     * @see https://en.wikipedia.org/wiki/St._Martin%27s_Day
+     *
+     * @param int    $year     the year for which St. Martin's Day need to be created
+     * @param string $timezone the timezone in which St. Martin's Day is celebrated
+     * @param string $locale   the locale for which St. Martin's Day need to be displayed in.
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
+     *
+     * @throws InvalidDateException
+     * @throws UnknownLocaleException
+     * @throws \InvalidArgumentException
+     * @throws \Exception
+     */
+    protected function stMartinsDay(
+        int $year,
+        string $timezone,
+        string $locale,
+        string $type = Holiday::TYPE_OFFICIAL
+    ): Holiday {
+        return new Holiday(
+            'stMartinsDay',
+            [],
+            new DateTime("$year-11-11", DateTimeZoneFactory::getDateTimeZone($timezone)),
+            $locale,
+            $type
+        );
+    }
+
+    /**
+     * International Women's Day.
+     *
+     * International Women's Day (IWD) is celebrated on March 8 every year.[3] It is a focal point in the movement for women's rights.
+     *
+     * @see https://en.wikipedia.org/wiki/International_Women%27s_Day
+     *
+     * @param int    $year     the year for which International Women's Day need to be created
+     * @param string $timezone the timezone in which International Women's Day is celebrated
+     * @param string $locale   the locale for which International Women's Day need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
+     *
+     * @throws InvalidDateException
+     * @throws UnknownLocaleException
+     * @throws \InvalidArgumentException
+     * @throws \Exception
+     */
+    protected function internationalWomensDay(
+        int $year,
+        string $timezone,
+        string $locale,
+        string $type = Holiday::TYPE_OFFICIAL
+    ): Holiday {
+        return new Holiday(
+            'internationalWomensDay',
+            [],
+            new DateTime("$year-03-08", DateTimeZoneFactory::getDateTimeZone($timezone)),
+            $locale,
+            $type
+        );
+    }
+
+    /**
+     * New Year's Eve.
+     *
+     * New Year's Eve is observed on December 31, the last day of the year on the modern Gregorian calendar as well as
+     * the Julian calendar. In present day, with most countries now using the Gregorian calendar as their de facto
+     * calendar, New Year's Eve is probably the most celebrated holiday, often observed with fireworks at the stroke of
+     * midnight as the new year starts in each time zone.
+     *
+     * @see https://en.wikipedia.org/wiki/New_Year%27s_Eve
+     *
+     * @param int    $year     the year for which New Year's Eve need to be created
+     * @param string $timezone the timezone in which New Year's Eve is celebrated
+     * @param string $locale   the locale for which New Year's Eve need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
+     *
+     * @throws InvalidDateException
+     * @throws UnknownLocaleException
+     * @throws \InvalidArgumentException
+     * @throws \Exception
+     */
+    private function newYearsEve(
+        int $year,
+        string $timezone,
+        string $locale,
+        string $type = Holiday::TYPE_OFFICIAL
+    ): Holiday {
+        return new Holiday('newYearsEve', [], new DateTime("$year-12-31", DateTimeZoneFactory::getDateTimeZone($timezone)), $locale, $type);
+    }
+
+    /**
      * Valentine's Day.
      *
      * Valentine's Day, also known as Saint Valentine's Day or the Feast of Saint Valentine, is a celebration observed
@@ -138,22 +204,20 @@ trait CommonHolidays
      * love for each other by presenting flowers, offering confectionery, and sending greeting cards (known as
      * "valentines").
      *
-     * @link https://en.wikipedia.org/wiki/Valentine%27s_Day
+     * @see https://en.wikipedia.org/wiki/Valentine%27s_Day
      *
-     * @param int $year the year for which Valentine's Day need to be created
+     * @param int    $year     the year for which Valentine's Day need to be created
      * @param string $timezone the timezone in which Valentine's Day is celebrated
-     * @param string $locale the locale for which Valentine's Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     * @param string $locale   the locale for which Valentine's Day need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
      *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function valentinesDay(
+    private function valentinesDay(
         int $year,
         string $timezone,
         string $locale,
@@ -175,22 +239,20 @@ trait CommonHolidays
      * 4, the Feast Day of St Francis of Assisi, the patron saint of animals. It started in 1931 at a convention of
      * ecologists in Florence, Italy who wished to highlight the plight of endangered species.
      *
-     * @link https://en.wikipedia.org/wiki/World_Animal_Day
+     * @see https://en.wikipedia.org/wiki/World_Animal_Day
      *
-     * @param int $year the year for which World Animal Day need to be created
+     * @param int    $year     the year for which World Animal Day need to be created
      * @param string $timezone the timezone in which World Animal Day is celebrated
-     * @param string $locale the locale for which World Animal Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     * @param string $locale   the locale for which World Animal Day need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
      *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function worldAnimalDay(
+    private function worldAnimalDay(
         int $year,
         string $timezone,
         string $locale,
@@ -206,45 +268,6 @@ trait CommonHolidays
     }
 
     /**
-     * St. Martin's Day.
-     *
-     * St. Martin's Day, also known as the Feast of St. Martin, Martinstag or Martinmas, the Feast of St Martin of Tours
-     * or Martin le Miséricordieux, is a time for feasting celebrations. This is the time when autumn wheat seeding was
-     * completed, and the annual slaughter of fattened cattle produced "Martinmas beef". Historically, hiring fairs were
-     * held where farm laborers would seek new posts. November 11 is the feast day of St. Martin of Tours, who started
-     * out as a Roman soldier.
-     *
-     * @link https://en.wikipedia.org/wiki/St._Martin%27s_Day
-     *
-     * @param int $year the year for which St. Martin's Day need to be created
-     * @param string $timezone the timezone in which St. Martin's Day is celebrated
-     * @param string $locale the locale for which St. Martin's Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
-     *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
-     *
-     * @throws InvalidDateException
-     * @throws UnknownLocaleException
-     * @throws \InvalidArgumentException
-     * @throws \Exception
-     */
-    public function stMartinsDay(
-        int $year,
-        string $timezone,
-        string $locale,
-        string $type = Holiday::TYPE_OFFICIAL
-    ): Holiday {
-        return new Holiday(
-            'stMartinsDay',
-            [],
-            new DateTime("$year-11-11", DateTimeZoneFactory::getDateTimeZone($timezone)),
-            $locale,
-            $type
-        );
-    }
-
-    /**
      * Father's Day.
      *
      * Father's Day is a celebration honoring fathers and celebrating fatherhood, paternal bonds, and the influence of
@@ -252,22 +275,20 @@ trait CommonHolidays
      * on other days by many other countries. Father's Day was created to complement Mother's Day, a celebration that
      * honors mothers and motherhood.
      *
-     * @link https://en.wikipedia.org/wiki/Father%27s_Day
+     * @see https://en.wikipedia.org/wiki/Father%27s_Day
      *
-     * @param int $year the year for which Father's Day need to be created
+     * @param int    $year     the year for which Father's Day need to be created
      * @param string $timezone the timezone in which Father's Day is celebrated
-     * @param string $locale the locale for which Father's Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     * @param string $locale   the locale for which Father's Day need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
      *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function fathersDay(
+    private function fathersDay(
         int $year,
         string $timezone,
         string $locale,
@@ -290,22 +311,20 @@ trait CommonHolidays
      * the months of March or May. It complements similar celebrations honoring family members, such as Father's Day and
      * Siblings Day.
      *
-     * @link https://en.wikipedia.org/wiki/Mother%27s_Day
+     * @see https://en.wikipedia.org/wiki/Mother%27s_Day
      *
-     * @param int $year the year for which Mother's Day need to be created
+     * @param int    $year     the year for which Mother's Day need to be created
      * @param string $timezone the timezone in which Mother's Day is celebrated
-     * @param string $locale the locale for which Mother's Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     * @param string $locale   the locale for which Mother's Day need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
      *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function mothersDay(
+    private function mothersDay(
         int $year,
         string $timezone,
         string $locale,
@@ -328,22 +347,20 @@ trait CommonHolidays
      * Germany's unconditional surrender of its armed forces. It thus marked the end of World War II in Europe. Some
      * countries commemorate the end of the war on a different date.
      *
-     * @link https://en.wikipedia.org/wiki/Victory_in_Europe_Day
+     * @see https://en.wikipedia.org/wiki/Victory_in_Europe_Day
      *
-     * @param int $year the year for which Victory in Europe Day need to be created
+     * @param int    $year     the year for which Victory in Europe Day need to be created
      * @param string $timezone the timezone in which Victory in Europe Day is celebrated
-     * @param string $locale the locale for which Victory in Europe Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     * @param string $locale   the locale for which Victory in Europe Day need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
      *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function victoryInEuropeDay(
+    private function victoryInEuropeDay(
         int $year,
         string $timezone,
         string $locale,
@@ -368,22 +385,20 @@ trait CommonHolidays
      * day of the Armistice of Villa Giusti. In the Netherlands, Denmark and Norway World War I is not commemorated as
      * the three countries all remained neutral.
      *
-     * @link https://en.wikipedia.org/wiki/Armistice_Day
+     * @see https://en.wikipedia.org/wiki/Armistice_Day
      *
-     * @param int $year the year for which Armistice Day need to be created
+     * @param int    $year     the year for which Armistice Day need to be created
      * @param string $timezone the timezone in which Armistice Day is celebrated
-     * @param string $locale the locale for which Armistice Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     * @param string $locale   the locale for which Armistice Day need to be displayed in
+     * @param string $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
      *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function armisticeDay(
+    private function armisticeDay(
         int $year,
         string $timezone,
         string $locale,
@@ -399,58 +414,19 @@ trait CommonHolidays
     }
 
     /**
-     * International Women's Day
-     *
-     * International Women's Day (IWD) is celebrated on March 8 every year.[3] It is a focal point in the movement for women's rights.
-     *
-     * @link https://en.wikipedia.org/wiki/International_Women%27s_Day
-     *
-     * @param int $year the year for which International Women's Day need to be created
-     * @param string $timezone the timezone in which International Women's Day is celebrated
-     * @param string $locale the locale for which International Women's Day need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
-     *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday
-     *
-     * @throws InvalidDateException
-     * @throws UnknownLocaleException
-     * @throws \InvalidArgumentException
-     * @throws \Exception
-     */
-    public function internationalWomensDay(
-        int $year,
-        string $timezone,
-        string $locale,
-        string $type = Holiday::TYPE_OFFICIAL
-    ): Holiday {
-        return new Holiday(
-            'internationalWomensDay',
-            [],
-            new DateTime("$year-03-08", DateTimeZoneFactory::getDateTimeZone($timezone)),
-            $locale,
-            $type
-        );
-    }
-
-    /**
      * The beginning of summer time.
      *
      * Summer time is also known as daylight save time.
      *
-     * @param int $year the year for which summer time need to be created
-     * @param string $timezone the timezone in which summer time transition occurs
-     * @param string $locale the locale for which summer time need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
-     *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
+     * @param int         $year     the year for which summer time need to be created
+     * @param string      $timezone the timezone in which summer time transition occurs
+     * @param string      $locale   the locale for which summer time need to be displayed in
+     * @param string|null $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     *                              TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
      *
-     * @return Holiday|null
-     *
-     * @throws UnknownLocaleException
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function summerTime(
+    private function summerTime(
         int $year,
         string $timezone,
         string $locale,
@@ -461,6 +437,40 @@ trait CommonHolidays
         if ($date instanceof \DateTimeImmutable) {
             return new Holiday(
                 'summerTime',
+                [],
+                $date,
+                $locale,
+                $type ?? Holiday::TYPE_SEASON
+            );
+        }
+
+        return null;
+    }
+
+    /**
+     * The beginning of winter time.
+     *
+     * Winter time is also known as standard time.
+     *
+     * @param int         $year     the year for which summer time need to be created
+     * @param string      $timezone the timezone in which summer time transition occurs
+     * @param string      $locale   the locale for which summer time need to be displayed in
+     * @param string|null $type     The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
+     *                              TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
+     *
+     * @throws \Exception
+     */
+    private function winterTime(
+        int $year,
+        string $timezone,
+        string $locale,
+        ?string $type = null
+    ): ?Holiday {
+        $date = $this->calculateSummerWinterTime($year, $timezone, false);
+
+        if ($date instanceof \DateTimeImmutable) {
+            return new Holiday(
+                'winterTime',
                 [],
                 $date,
                 $locale,
@@ -484,69 +494,32 @@ trait CommonHolidays
      * On the northern hemisphere, summer time starts around March/April. On the southern hemisphere it happens 6
      * months later.
      *
-     * @param int $year the year for which Easter needs to be calculated
+     * @param int    $year     the year for which Easter needs to be calculated
      * @param string $timezone the timezone in which Easter is celebrated
-     * @param bool $summer whether to calculate the start of summer or winter time
+     * @param bool   $summer   whether to calculate the start of summer or winter time
      *
      * @return \DateTimeImmutable|null A DateTime object representing the summer or winter transition time for the given
-     *                        timezone. If no transition time is found, a null value is returned.
+     *                                 timezone. If no transition time is found, a null value is returned.
+     *
      * @throws \Exception
      */
-    protected function calculateSummerWinterTime(
+    private function calculateSummerWinterTime(
         int $year,
         string $timezone,
         bool $summer
     ): ?\DateTimeImmutable {
         $zone = DateTimeZoneFactory::getDateTimeZone($timezone);
 
-        $transitions = $zone->getTransitions(\mktime(0, 0, 0, 1, 1, $year), \mktime(23, 59, 59, 12, 31, $year));
+        $transitions = $zone->getTransitions(mktime(0, 0, 0, 1, 1, $year), mktime(23, 59, 59, 12, 31, $year));
 
-        $transition = \array_shift($transitions);
+        $transition = array_shift($transitions);
         $dst = $transition['isdst'];
 
         foreach ($transitions as $transition) {
             if ($transition['isdst'] !== $dst && $transition['isdst'] === $summer) {
-                return new \DateTimeImmutable(\substr($transition['time'], 0, 10), $zone);
+                return new \DateTimeImmutable(substr($transition['time'], 0, 10), $zone);
             }
             $dst = $transition['isdst'];
-        }
-
-        return null;
-    }
-
-    /**
-     * The beginning of winter time.
-     *
-     * Winter time is also known as standard time.
-     *
-     * @param int $year the year for which summer time need to be created
-     * @param string $timezone the timezone in which summer time transition occurs
-     * @param string $locale the locale for which summer time need to be displayed in.
-     * @param string $type The type of holiday. Use the following constants: TYPE_OFFICIAL, TYPE_OBSERVANCE,
-     *                         TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default an official holiday is considered.
-     *
-     * @return Holiday|null
-     *
-     * @throws UnknownLocaleException
-     * @throws \InvalidArgumentException
-     * @throws \Exception
-     */
-    public function winterTime(
-        int $year,
-        string $timezone,
-        string $locale,
-        ?string $type = null
-    ): ?Holiday {
-        $date = $this->calculateSummerWinterTime($year, $timezone, false);
-
-        if ($date instanceof \DateTimeImmutable) {
-            return new Holiday(
-                'winterTime',
-                [],
-                $date,
-                $locale,
-                $type ?? Holiday::TYPE_SEASON
-            );
         }
 
         return null;

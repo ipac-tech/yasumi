@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +16,12 @@ namespace Yasumi\tests\Spain\BalearicIslands;
 
 use ReflectionException;
 use Yasumi\Holiday;
+use Yasumi\tests\ProviderTestCase;
 
 /**
  * Class for testing holidays in the Balearic Islands (Spain).
  */
-class BalearicIslandsTest extends BalearicIslandsBaseTestCase
+class BalearicIslandsTest extends BalearicIslandsBaseTestCase implements ProviderTestCase
 {
     /**
      * @var int year random year number used for all tests in this Test Case
@@ -26,15 +29,23 @@ class BalearicIslandsTest extends BalearicIslandsBaseTestCase
     protected $year;
 
     /**
-     * Tests if all official holidays in the Balearic Islands (Spain) are defined by the provider class
+     * Initial setup of this Test Case.
+     */
+    protected function setUp(): void
+    {
+        $this->year = $this->generateRandomYear(1981);
+    }
+
+    /**
+     * Tests if all official holidays in the Balearic Islands (Spain) are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOfficialHolidays(): void
     {
-        $this->assertDefinedHolidays([
+        $holidays = [
             'newYearsDay',
             'epiphany',
-            'balearicIslandsDay',
             'goodFriday',
             'internationalWorkersDay',
             'assumptionOfMary',
@@ -43,11 +54,18 @@ class BalearicIslandsTest extends BalearicIslandsBaseTestCase
             'constitutionDay',
             'immaculateConception',
             'christmasDay',
-        ], self::REGION, $this->year, Holiday::TYPE_OFFICIAL);
+        ];
+
+        if ($this->year >= 1983) {
+            $holidays[] = 'balearicIslandsDay';
+        }
+
+        $this->assertDefinedHolidays($holidays, self::REGION, $this->year, Holiday::TYPE_OFFICIAL);
     }
 
     /**
-     * Tests if all observed holidays in the Balearic Islands are defined by the provider class
+     * Tests if all observed holidays in the Balearic Islands are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testObservedHolidays(): void
@@ -62,7 +80,8 @@ class BalearicIslandsTest extends BalearicIslandsBaseTestCase
     }
 
     /**
-     * Tests if all seasonal holidays in the Balearic Islands are defined by the provider class
+     * Tests if all seasonal holidays in the Balearic Islands are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testSeasonalHolidays(): void
@@ -71,7 +90,8 @@ class BalearicIslandsTest extends BalearicIslandsBaseTestCase
     }
 
     /**
-     * Tests if all bank holidays in the Balearic Islands are defined by the provider class
+     * Tests if all bank holidays in the Balearic Islands are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testBankHolidays(): void
@@ -80,7 +100,8 @@ class BalearicIslandsTest extends BalearicIslandsBaseTestCase
     }
 
     /**
-     * Tests if all other holidays in the Balearic Islands are defined by the provider class
+     * Tests if all other holidays in the Balearic Islands are defined by the provider class.
+     *
      * @throws ReflectionException
      */
     public function testOtherHolidays(): void
@@ -89,10 +110,10 @@ class BalearicIslandsTest extends BalearicIslandsBaseTestCase
     }
 
     /**
-     * Initial setup of this Test Case
+     * @throws ReflectionException
      */
-    protected function setUp(): void
+    public function testSources(): void
     {
-        $this->year = $this->generateRandomYear(1981);
+        $this->assertSources(self::REGION, 1);
     }
 }

@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,16 +22,15 @@ use Yasumi\SubstituteHoliday;
 
 /**
  * Provider for all holidays in Ukraine.
- * https://en.wikipedia.org/wiki/Public_holidays_in_Ukraine
  *
  * Class Ukraine
- * @package Yasumi\Provider
  *
  * @author  Dmitry Machin <machin.dmitry@gmail.com>
  */
 class Ukraine extends AbstractProvider
 {
-    use CommonHolidays, ChristianHolidays;
+    use CommonHolidays;
+    use ChristianHolidays;
 
     /**
      * Code to identify this Holiday Provider.
@@ -69,12 +70,20 @@ class Ukraine extends AbstractProvider
         $this->calculateCatholicChristmasDay();
     }
 
+    public function getSources(): array
+    {
+        return [
+            'https://en.wikipedia.org/wiki/Public_holidays_in_Ukraine',
+            'https://uk.wikipedia.org/wiki/%D0%9D%D0%B5%D1%80%D0%BE%D0%B1%D0%BE%D1%87%D1%96_%D0%B4%D0%BD%D1%96_%D0%B2_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D1%96',
+        ];
+    }
+
     /**
      * Adds a holiday to the holidays providers (i.e. country/state) list of holidays.
      *
-     * @param Holiday $holiday Holiday instance (representing a holiday) to be added to the internal list
-     *                         of holidays of this country.
-     * @param bool $substitutable Holidays on a weekend will be substituted to the next monday.
+     * @param Holiday $holiday       holiday instance (representing a holiday) to be added to the internal list
+     *                               of holidays of this country
+     * @param bool    $substitutable holidays on a weekend will be substituted to the next monday
      *
      * @throws InvalidDateException
      * @throws UnknownLocaleException
@@ -105,6 +114,14 @@ class Ukraine extends AbstractProvider
     }
 
     /**
+     * @throws \Exception
+     */
+    protected function calculateEaster(int $year, string $timezone): \DateTime
+    {
+        return $this->calculateOrthodoxEaster($year, $timezone);
+    }
+
+    /**
      * Christmas Day.
      *
      * @throws InvalidDateException
@@ -126,7 +143,7 @@ class Ukraine extends AbstractProvider
      * International Workers' Day.
      * National holiday until 2018.
      *
-     * @link https://en.wikipedia.org/wiki/International_Workers%27_Day#Ukraine
+     * @see https://en.wikipedia.org/wiki/International_Workers%27_Day#Ukraine
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -146,7 +163,7 @@ class Ukraine extends AbstractProvider
     }
 
     /**
-     * Victory Day over Nazism in World War II
+     * Victory Day over Nazism in World War II.
      *
      * Victory Day over Nazism in World War II (Ukrainian: День перемоги над нацизмом у Другій світовій війні)
      * or Victory Day (Ukrainian: День перемоги) is a national holiday and a day off in Ukraine.
@@ -154,7 +171,7 @@ class Ukraine extends AbstractProvider
      * The holiday replaced the Soviet "Victory Day", which was celebrated in the post-Soviet Union states, including
      * Ukraine, until 2014 inclusive.
      *
-     * @link https://en.wikipedia.org/wiki/Victory_Day_over_Nazism_in_World_War_II
+     * @see https://en.wikipedia.org/wiki/Victory_Day_over_Nazism_in_World_War_II
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -172,11 +189,11 @@ class Ukraine extends AbstractProvider
     }
 
     /**
-     * Constitution Day
+     * Constitution Day.
      *
      * Constitution Day (Ukrainian: День Конституції) is an Ukrainian public holiday celebrated on 28 June since 1996.
      *
-     * @link https://en.wikipedia.org/wiki/Constitution_Day_(Ukraine)
+     * @see https://en.wikipedia.org/wiki/Constitution_Day_(Ukraine)
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -198,13 +215,13 @@ class Ukraine extends AbstractProvider
     }
 
     /**
-     * Independence Day
+     * Independence Day.
      *
      * The Act of Declaration of Independence of Ukraine (Ukrainian: Акт проголошення незалежності України, translit.
      * Akt proholoshennya nezalezhnosti Ukrayiny) was adopted by the Ukrainian parliament on 24 August 1991.
      * The Act established Ukraine as an independent state.
      *
-     * @link https://en.wikipedia.org/wiki/Declaration_of_Independence_of_Ukraine
+     * @see https://en.wikipedia.org/wiki/Declaration_of_Independence_of_Ukraine
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -226,14 +243,14 @@ class Ukraine extends AbstractProvider
     }
 
     /**
-     * Defender of Ukraine Day
+     * Defender of Ukraine Day.
      *
      * Defender of Ukraine Day (Ukrainian: День захисника України, Denʹ zakhysnyka Ukrayiny)
      * is a state holiday in Ukraine celebrated annually on October 14.
      * Its first celebration was in 2015.
      * Starting from 2015, this day is considered a public holiday (this is thus a day off in Ukraine)
      *
-     * @link https://en.wikipedia.org/wiki/Defender_of_Ukraine_Day
+     * @see https://en.wikipedia.org/wiki/Defender_of_Ukraine_Day
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -256,9 +273,9 @@ class Ukraine extends AbstractProvider
 
     /**
      * Catholic Christmas Day.
-     * (since 2017 instead of International Workers' Day 2. May)
+     * (since 2017 instead of International Workers' Day 2. May).
      *
-     * @link https://en.wikipedia.org/wiki/Christmas_in_Ukraine
+     * @see https://en.wikipedia.org/wiki/Christmas_in_Ukraine
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -283,18 +300,5 @@ class Ukraine extends AbstractProvider
             ),
             false  // Catholic Christmas Day will not be substituted to an monday if it's on a weekend!
         );
-    }
-
-    /**
-     * @param int $year
-     * @param string $timezone
-     *
-     * @return \DateTime
-     *
-     * @throws \Exception
-     */
-    public function calculateEaster(int $year, string $timezone): \DateTime
-    {
-        return $this->calculateOrthodoxEaster($year, $timezone);
     }
 }

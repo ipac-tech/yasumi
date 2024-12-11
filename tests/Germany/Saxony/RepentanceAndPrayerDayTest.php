@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,7 +19,7 @@ use DateTimeZone;
 use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
  * Class for testing Repentance And Prayer Day in Saxony (Germany).
@@ -27,20 +29,21 @@ use Yasumi\tests\YasumiTestCaseInterface;
  * Buß- und Bettag has undergone many changes as either a working or non-working holiday in Germany. At the moment,
  * Yasumi only considers (for now) the time it was established as non-working day in Saxony.
  */
-class RepentanceAndPrayerDayTest extends SaxonyBaseTestCase implements YasumiTestCaseInterface
+class RepentanceAndPrayerDayTest extends SaxonyBaseTestCase implements HolidayTestCase
 {
     /**
-     * The name of the holiday to be tested
+     * The name of the holiday to be tested.
      */
     public const HOLIDAY = 'repentanceAndPrayerDay';
 
     /**
-     * The year in which the holiday was first established
+     * The year in which the holiday was first established.
      */
     public const ESTABLISHMENT_YEAR = 1995;
 
     /**
      * Tests the holiday defined in this test on or after establishment.
+     *
      * @throws ReflectionException
      * @throws Exception
      */
@@ -53,13 +56,14 @@ class RepentanceAndPrayerDayTest extends SaxonyBaseTestCase implements YasumiTes
         $this->assertHoliday(self::REGION, self::HOLIDAY, $year, $holiday);
 
         // Holiday specific assertions
-        $this->assertEquals('Wednesday', $holiday->format('l'));
-        $this->assertGreaterThanOrEqual(16, $holiday->format('j'));
-        $this->assertLessThanOrEqual(22, $holiday->format('j'));
+        self::assertEquals('Wednesday', $holiday->format('l'));
+        self::assertGreaterThanOrEqual(16, $holiday->format('j'));
+        self::assertLessThanOrEqual(22, $holiday->format('j'));
     }
 
     /**
      * Tests the holiday defined in this test before establishment.
+     *
      * @throws ReflectionException
      */
     public function testHolidayBeforeEstablishment(): void
@@ -73,6 +77,7 @@ class RepentanceAndPrayerDayTest extends SaxonyBaseTestCase implements YasumiTes
 
     /**
      * Tests the translated name of the holiday defined in this test.
+     *
      * @throws ReflectionException
      */
     public function testTranslation(): void
@@ -87,6 +92,7 @@ class RepentanceAndPrayerDayTest extends SaxonyBaseTestCase implements YasumiTes
 
     /**
      * Tests type of the holiday defined in this test.
+     *
      * @throws ReflectionException
      */
     public function testHolidayType(): void

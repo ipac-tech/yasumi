@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,32 +20,31 @@ use DateTimeZone;
 use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
  * Class for testing day after Arbor Day in South Korea.
  */
-class ArborDayTest extends SouthKoreaBaseTestCase implements YasumiTestCaseInterface
+class ArborDayTest extends SouthKoreaBaseTestCase implements HolidayTestCase
 {
     /**
-     * The name of the holiday
-     */
-    private const HOLIDAY = 'arborDay';
-
-    /**
-     * The year in which the holiday was first established
-     */
-    private const ESTABLISHMENT_YEAR = 1949;
-
-    /**
-     * The year in which the holiday was removed
+     * The year in which the holiday was removed.
      */
     public const REMOVED_YEAR = 2005;
 
     /**
-     * The year in which the holiday was not celebrated
+     * The year in which the holiday was not celebrated.
      */
     public const YEAR_NOT_CELEBRATED = 1960;
+    /**
+     * The name of the holiday.
+     */
+    private const HOLIDAY = 'arborDay';
+
+    /**
+     * The year in which the holiday was first established.
+     */
+    private const ESTABLISHMENT_YEAR = 1949;
 
     /**
      * Tests the holiday defined in this test.

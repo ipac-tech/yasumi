@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
-/**
+<?php
+
+declare(strict_types=1);
+/*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2020 AzuyaLabs
+ * Copyright (c) 2015 - 2021 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,7 +27,8 @@ use Yasumi\SubstituteHoliday;
  */
 class UnitedKingdom extends AbstractProvider
 {
-    use CommonHolidays, ChristianHolidays;
+    use CommonHolidays;
+    use ChristianHolidays;
 
     /**
      * Code to identify this Holiday Provider. Typically this is the ISO3166 code corresponding to the respective
@@ -57,43 +60,11 @@ class UnitedKingdom extends AbstractProvider
         $this->calculateChristmasHolidays();
     }
 
-    /**
-     * New Year's Day is a public holiday in the United Kingdom on January 1 each year. It marks
-     * the start of the New Year in the Gregorian calendar. For many people have a quiet day on
-     * January 1, which marks the end of the Christmas break before they return to work.
-     *
-     * If New Years Day falls on a Saturday or Sunday, it is observed the next Monday (January 2nd or 3rd)
-     * Before 1871 it was not an observed or statutory holiday, after 1871 only an observed holiday.
-     * Since 1974 (by Royal Proclamation) it was established as a bank holiday.
-     *
-     * @link https://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom
-     * @link https://www.timeanddate.com/holidays/uk/new-year-day
-     *
-     * @throws InvalidDateException
-     * @throws \InvalidArgumentException
-     * @throws UnknownLocaleException
-     * @throws \Exception
-     */
-    protected function calculateNewYearsDay(): void
+    public function getSources(): array
     {
-        // Before 1871 it was not an observed or statutory holiday
-        if ($this->year < 1871) {
-            return;
-        }
-
-        $type = Holiday::TYPE_BANK;
-        if ($this->year <= 1974) {
-            $type = Holiday::TYPE_OBSERVANCE;
-        }
-
-        $newYearsDay = new DateTime("$this->year-01-01", DateTimeZoneFactory::getDateTimeZone($this->timezone));
-
-        // If New Years Day falls on a Saturday or Sunday, it is observed the next Monday (January 2nd or 3rd)
-        if (\in_array((int) $newYearsDay->format('w'), [0, 6], true)) {
-            $newYearsDay->modify('next monday');
-        }
-
-        $this->addHoliday(new Holiday('newYearsDay', [], $newYearsDay, $this->locale, $type));
+        return [
+            'https://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom',
+        ];
     }
 
     /**
@@ -106,7 +77,7 @@ class UnitedKingdom extends AbstractProvider
      * and schools are closed, while stores may be open or closed, according to local custom. Public transport systems
      * often run to a holiday timetable.
      *
-     * @link https://www.timeanddate.com/holidays/uk/early-may-bank-holiday
+     * @see https://www.timeanddate.com/holidays/uk/early-may-bank-holiday
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -150,8 +121,8 @@ class UnitedKingdom extends AbstractProvider
      * The last Monday in May is a bank holiday. Many organizations, businesses and schools are closed. Stores may be
      * open or closed, according to local custom. Public transport systems often run to a holiday timetable.
      *
-     * @link https://www.timeanddate.com/holidays/uk/spring-bank-holiday
-     * @link https://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom
+     * @see https://www.timeanddate.com/holidays/uk/spring-bank-holiday
+     * @see https://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
@@ -189,6 +160,99 @@ class UnitedKingdom extends AbstractProvider
     }
 
     /**
+     * Christmas Day is celebrated in the United Kingdom on December 25. It traditionally celebrates Jesus Christ's
+     * birth but many aspects of this holiday have pagan origins. Christmas is a time for many people to give and
+     * receive gifts and prepare special festive meals.
+     *
+     * Boxing Day in the United Kingdom is the day after Christmas Day and falls on December 26. Traditionally, it was
+     * a
+     * day when employers distributed money, food, cloth (material) or other valuable goods to their employees.
+     * In modern times, it is an important day for sporting events and the start of the post-Christmas sales.
+     *
+     * Boxing Day is a bank holiday. If Boxing Day falls on a Saturday, the following Monday is a bank holiday.
+     * If Christmas Day falls on a Saturday, the following Monday and Tuesday are bank holidays. All schools and many
+     * organizations are closed in this period. Some may close for the whole week between Christmas and New Year.
+     *
+     * @see https://www.timeanddate.com/holidays/uk/christmas-day
+     * @see https://www.timeanddate.com/holidays/uk/boxing-day
+     *
+     * @param string|null $type the Holiday Type (e.g. Official, Seasonal, etc.)
+     *
+     * @throws \Exception
+     */
+    protected function calculateChristmasHolidays(?string $type = null): void
+    {
+        $christmasDay = $this->christmasDay($this->year, $this->timezone, $this->locale, $type ?? Holiday::TYPE_OFFICIAL);
+        $secondChristmasDay = $this->secondChristmasDay($this->year, $this->timezone, $this->locale, Holiday::TYPE_BANK);
+
+        $this->addHoliday($christmasDay);
+        $this->addHoliday($secondChristmasDay);
+
+        if (\in_array((int) $christmasDay->format('w'), [0, 6], true)) {
+            $date = clone $christmasDay;
+            $date->add(new DateInterval('P2D'));
+            $this->addHoliday(new SubstituteHoliday(
+                $christmasDay,
+                [],
+                $date,
+                $this->locale,
+                Holiday::TYPE_BANK
+            ));
+        }
+
+        if (\in_array((int) $secondChristmasDay->format('w'), [0, 6], true)) {
+            $date = clone $secondChristmasDay;
+            $date->add(new DateInterval('P2D'));
+            $this->addHoliday(new SubstituteHoliday(
+                $secondChristmasDay,
+                [],
+                $date,
+                $this->locale,
+                Holiday::TYPE_BANK
+            ));
+        }
+    }
+
+    /**
+     * New Year's Day is a public holiday in the United Kingdom on January 1 each year. It marks
+     * the start of the New Year in the Gregorian calendar. For many people have a quiet day on
+     * January 1, which marks the end of the Christmas break before they return to work.
+     *
+     * If New Years Day falls on a Saturday or Sunday, it is observed the next Monday (January 2nd or 3rd)
+     * Before 1871 it was not an observed or statutory holiday, after 1871 only an observed holiday.
+     * Since 1974 (by Royal Proclamation) it was established as a bank holiday.
+     *
+     * @see https://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom
+     * @see https://www.timeanddate.com/holidays/uk/new-year-day
+     *
+     * @throws InvalidDateException
+     * @throws \InvalidArgumentException
+     * @throws UnknownLocaleException
+     * @throws \Exception
+     */
+    private function calculateNewYearsDay(): void
+    {
+        // Before 1871 it was not an observed or statutory holiday
+        if ($this->year < 1871) {
+            return;
+        }
+
+        $type = Holiday::TYPE_BANK;
+        if ($this->year <= 1974) {
+            $type = Holiday::TYPE_OBSERVANCE;
+        }
+
+        $newYearsDay = new DateTime("$this->year-01-01", DateTimeZoneFactory::getDateTimeZone($this->timezone));
+
+        // If New Years Day falls on a Saturday or Sunday, it is observed the next Monday (January 2nd or 3rd)
+        if (\in_array((int) $newYearsDay->format('w'), [0, 6], true)) {
+            $newYearsDay->modify('next monday');
+        }
+
+        $this->addHoliday(new Holiday('newYearsDay', [], $newYearsDay, $this->locale, $type));
+    }
+
+    /**
      * The Summer Bank holiday, also known as the Late Summer bank holiday, is a time for people in the United Kingdom
      * to have a day off work or school. It falls on the last Monday of August replacing the first Monday in August
      * (formerly commonly known as "August Bank Holiday").
@@ -196,15 +260,15 @@ class UnitedKingdom extends AbstractProvider
      * Many organizations, businesses and schools are closed. Stores may be open or closed, according to local custom.
      * Public transport systems often run to a holiday timetable.
      *
-     * @link https://www.timeanddate.com/holidays/uk/summer-bank-holiday
-     * @link https://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom
+     * @see https://www.timeanddate.com/holidays/uk/summer-bank-holiday
+     * @see https://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom
      *
      * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
      */
-    protected function calculateSummerBankHoliday(): void
+    private function calculateSummerBankHoliday(): void
     {
         if ($this->year < 1871) {
             return;
@@ -244,59 +308,5 @@ class UnitedKingdom extends AbstractProvider
             $this->locale,
             Holiday::TYPE_BANK
         ));
-    }
-
-    /**
-     * Christmas Day is celebrated in the United Kingdom on December 25. It traditionally celebrates Jesus Christ's
-     * birth but many aspects of this holiday have pagan origins. Christmas is a time for many people to give and
-     * receive gifts and prepare special festive meals.
-     *
-     * Boxing Day in the United Kingdom is the day after Christmas Day and falls on December 26. Traditionally, it was
-     * a
-     * day when employers distributed money, food, cloth (material) or other valuable goods to their employees.
-     * In modern times, it is an important day for sporting events and the start of the post-Christmas sales.
-     *
-     * Boxing Day is a bank holiday. If Boxing Day falls on a Saturday, the following Monday is a bank holiday.
-     * If Christmas Day falls on a Saturday, the following Monday and Tuesday are bank holidays. All schools and many
-     * organizations are closed in this period. Some may close for the whole week between Christmas and New Year.
-     *
-     * @link https://www.timeanddate.com/holidays/uk/christmas-day
-     * @link https://www.timeanddate.com/holidays/uk/boxing-day
-     *
-     * @param string|null $type the Holiday Type (e.g. Official, Seasonal, etc.)
-     *
-     * @throws \Exception
-     */
-    protected function calculateChristmasHolidays(?string $type = null): void
-    {
-        $christmasDay = $this->christmasDay($this->year, $this->timezone, $this->locale, $type ?? Holiday::TYPE_OFFICIAL);
-        $secondChristmasDay = $this->secondChristmasDay($this->year, $this->timezone, $this->locale, Holiday::TYPE_BANK);
-
-        $this->addHoliday($christmasDay);
-        $this->addHoliday($secondChristmasDay);
-
-        if (\in_array((int) $christmasDay->format('w'), [0, 6], true)) {
-            $date = clone $christmasDay;
-            $date->add(new DateInterval('P2D'));
-            $this->addHoliday(new SubstituteHoliday(
-                $christmasDay,
-                [],
-                $date,
-                $this->locale,
-                Holiday::TYPE_BANK
-            ));
-        }
-
-        if (\in_array((int) $secondChristmasDay->format('w'), [0, 6], true)) {
-            $date = clone $secondChristmasDay;
-            $date->add(new DateInterval('P2D'));
-            $this->addHoliday(new SubstituteHoliday(
-                $secondChristmasDay,
-                [],
-                $date,
-                $this->locale,
-                Holiday::TYPE_BANK
-            ));
-        }
     }
 }
