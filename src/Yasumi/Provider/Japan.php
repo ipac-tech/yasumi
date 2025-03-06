@@ -683,6 +683,7 @@ class Japan extends AbstractProvider
             '01-03',
             '01-04',
             '01-05',
+            '03-21',
             '04-29',
             '04-30',
             '05-01',
